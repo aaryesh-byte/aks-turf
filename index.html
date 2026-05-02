@@ -4,77 +4,186 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AKS Turf | Premium Cricket Arena</title>
-    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==================== CSS STYLES ==================== */
+        :root {
+            --primary-green: #2ecc71;
+            --dark-bg: #121212;
+            --text-light: #f4f4f4;
+            --font-heading: 'Oswald', sans-serif;
+            --font-body: 'Roboto', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body { font-family: var(--font-body); background-color: var(--dark-bg); color: var(--text-light); }
+
+        /* Navigation */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; background: rgba(0,0,0,0.9); position: fixed; width: 100%; z-index: 100; top: 0;}
+        .logo { font-family: var(--font-heading); font-size: 24px; color: white; text-decoration: none; font-weight: bold; letter-spacing: 1px; cursor: pointer; }
+        .logo span { color: var(--primary-green); }
+
+        .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1001; }
+        .hamburger span { width: 25px; height: 3px; background: white; transition: 0.3s; }
+        
+        .menu-links { display: flex; gap: 20px; }
+        .menu-links a { color: white; text-decoration: none; font-size: 14px; font-weight: bold; transition: 0.3s; }
+        .menu-links a:hover { color: var(--primary-green); }
+        .admin-link { color: #f39c12 !important; }
+
+        /* Hero Section */
+        .hero { height: 100vh; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover; display: flex; align-items: center; padding: 0 10%; margin-top: 0; }
+        .hero-content h1 { font-family: var(--font-heading); font-size: 5rem; line-height: 1; margin: 20px 0; text-transform: uppercase; }
+        .hero-content h1 span { color: var(--primary-green); font-style: italic; }
+        .hero-content p { max-width: 500px; margin-bottom: 30px; line-height: 1.6; }
+
+        .badge { background: rgba(46, 204, 113, 0.2); color: var(--primary-green); padding: 5px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+        
+        .btn-primary { padding: 15px 30px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; background: var(--primary-green); color: white; }
+        .btn-primary:hover { background: #27ae60; }
+
+        /* Booking Section */
+        .booking-container { padding: 100px 5%; background: #f4f6f8; color: #121212; min-height: 100vh; }
+        .booking-header h2 { font-family: var(--font-heading); font-size: 3rem; font-style: italic; text-transform: uppercase; line-height: 1;}
+        .booking-header span { color: var(--primary-green); }
+        .booking-layout { display: flex; gap: 40px; margin-top: 30px; }
+        
+        .slots-area { flex: 2; display: flex; flex-wrap: wrap; gap: 15px; align-content: flex-start; }
+        .panel-area { flex: 1; }
+
+        .slot-card { background: white; border-radius: 10px; padding: 20px; width: calc(50% - 15px); box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; border: 1px solid #eee; transition: 0.3s; }
+        .slot-time { font-weight: bold; font-size: 16px; }
+        .slot-price { color: #666; font-size: 14px; margin-top: 5px; }
+        .slot-badge { padding: 5px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+
+        /* Slot Status Colors */
+        .status-available { background: rgba(46, 204, 113, 0.1); color: #2ecc71; }
+        .status-booked { background: rgba(231, 76, 60, 0.1); color: #e74c3c; cursor: not-allowed; }
+        .status-pending { background: rgba(241, 196, 15, 0.1); color: #f39c12; cursor: not-allowed; }
+        .status-expired { background: rgba(0, 0, 0, 0.1); color: #666; cursor: not-allowed; opacity: 0.6; }
+
+        .btn-book { background: black; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .btn-book:disabled { background: #ccc; color: #666; cursor: not-allowed; }
+
+        /* Panel UI */
+        .panel-card { background: white; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: sticky; top: 100px;}
+        .panel-header { display: flex; justify-content: space-between; font-size: 12px; font-weight: bold; color: #888; margin-bottom: 20px; }
+        .date-picker-box { background: black; color: white; padding: 15px; border-radius: 15px; }
+        .date-picker-box label { display: block; font-size: 10px; color: #aaa; margin-bottom: 5px; }
+        .date-picker-box input { background: transparent; border: none; color: white; font-size: 18px; font-weight: bold; outline: none; width: 100%; color-scheme: dark;}
+        .btn-refresh { width: 100%; padding: 15px; margin-top: 15px; border: 1px solid #eee; background: white; border-radius: 10px; cursor: pointer; font-weight: bold; }
+
+        /* Admin Dashboard */
+        .admin-container { padding: 100px 5%; background: white; color: black; min-height: 100vh; display: none; }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;}
+        .admin-container h2 { font-family: var(--font-heading); font-size: 3rem; font-style: italic; }
+        .admin-container span { color: #f39c12; }
+        .admin-controls input { padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; margin-right: 10px;}
+        .btn-logout { background: black; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;}
+        
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .admin-table th, .admin-table td { padding: 15px; border: 1px solid #ddd; text-align: left; }
+        .admin-table th { background: black; color: white; }
+        .btn-approve { background: #2ecc71; color: white; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; margin-right: 5px; font-weight: bold;}
+        .btn-deny { background: #e74c3c; color: white; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;}
+
+        /* Modal Form */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); }
+        .modal-content { background: white; color: black; margin: 10% auto; padding: 40px; width: 90%; max-width: 400px; border-radius: 10px; position: relative; }
+        .close { position: absolute; right: 20px; top: 15px; font-size: 24px; cursor: pointer; }
+        form input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+        form button { width: 100%; margin-top: 10px; }
+        
+        .loader { font-weight: bold; color: #888; padding: 20px; width: 100%; text-align: center;}
+
+        /* Responsive Mobile */
+        @media(max-width: 768px) {
+            .hamburger { display: flex; }
+            .menu-links { position: fixed; top: 70px; right: -100%; flex-direction: column; background: black; width: 200px; padding: 20px; transition: 0.3s; box-shadow: -5px 0 10px rgba(0,0,0,0.5);}
+            .menu-links.active { right: 0; }
+            .booking-layout { flex-direction: column-reverse; }
+            .slot-card { width: 100%; }
+            .hero-content h1 { font-size: 3.5rem; }
+        }
+    </style>
 </head>
 <body>
 
     <!-- Navigation -->
     <nav>
-        <a href="#home" class="logo" onclick="smoothScroll(event, 'home')">⚡ AKS TURF</a>
+        <a class="logo" onclick="goHome()">⚡ AKS <span>TURF</span></a>
         
         <!-- Hamburger Menu -->
         <div class="hamburger" onclick="toggleMenu()">
             <span></span><span></span><span></span>
         </div>
         <div class="menu-links" id="menuLinks">
-            <a href="#" onclick="openAuthModal('user')">Sign In / Register</a>
+            <a href="#" onclick="alert('User Login Portal Coming Soon!')">Sign In / Register</a>
             <a href="#" onclick="openAuthModal('admin')" class="admin-link">Admin Dashboard</a>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <header id="home" class="hero">
-        <div class="hero-content">
-            <span class="badge"># PUNE'S TOP CRICKET ARENA</span>
-            <h1>PLAY <span>BETTER</span><br>CRICKET<br>NIGHT & DAY</h1>
-            <p>Elevate your game at AKS Turf. Professional pitch maintenance, 360-degree tournament lighting.</p>
-            <div class="hero-buttons">
-                <button class="btn-primary" onclick="smoothScroll(event, 'booking-section')">BOOK A SLOT →</button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Slot Booking Section -->
-    <section id="booking-section" class="booking-container">
-        <div class="booking-header">
-            <h2>SELECT <span>SLOT</span></h2>
-            <p>Pick a date and your 2-hour battle window.</p>
-        </div>
+    <!-- Main Content Wrapper (Hides when Admin is open) -->
+    <div id="main-website">
         
-        <div class="booking-layout">
-            <div class="slots-area" id="slots-area">
-                <!-- Slots generated by JS -->
-                <div class="loader" id="slot-loader">Loading slots...</div>
-            </div>
-
-            <div class="panel-area">
-                <div class="panel-card">
-                    <div class="panel-header">
-                        <span>🗓 PANEL CONFIG</span>
-                        <span id="current-time-display">IST: --:--</span>
-                    </div>
-                    <div class="date-picker-box">
-                        <label>APPOINTMENT DATE</label>
-                        <input type="date" id="booking-date" onchange="fetchSlots()">
-                    </div>
-                    <button class="btn-refresh" onclick="fetchSlots()">🔄 REFRESH AVAILABILITY</button>
+        <!-- Hero Section -->
+        <header id="home" class="hero">
+            <div class="hero-content">
+                <span class="badge"># PUNE'S TOP CRICKET ARENA</span>
+                <h1>PLAY <span>BETTER</span><br>CRICKET<br>NIGHT & DAY</h1>
+                <p>Elevate your game at AKS Turf. Professional pitch maintenance, 360-degree tournament lighting.</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary" onclick="smoothScroll('booking-section')">BOOK A SLOT →</button>
                 </div>
             </div>
-        </div>
-    </section>
+        </header>
+
+        <!-- Slot Booking Section -->
+        <section id="booking-section" class="booking-container">
+            <div class="booking-header">
+                <h2>SELECT <span>SLOT</span></h2>
+                <p>Pick a date and your 2-hour battle window.</p>
+            </div>
+            
+            <div class="booking-layout">
+                <!-- Left Side: Slots -->
+                <div class="slots-area" id="slots-area">
+                    <div class="loader" id="slot-loader">Loading slots...</div>
+                </div>
+
+                <!-- Right Side: Panel -->
+                <div class="panel-area">
+                    <div class="panel-card">
+                        <div class="panel-header">
+                            <span>🗓 PANEL CONFIG</span>
+                            <span id="current-time-display" style="color:var(--primary-green);">IST: --:--</span>
+                        </div>
+                        <div class="date-picker-box">
+                            <label>APPOINTMENT DATE</label>
+                            <input type="date" id="booking-date" onchange="fetchSlots()">
+                        </div>
+                        <button class="btn-refresh" onclick="fetchSlots()">🔄 REFRESH AVAILABILITY</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 
     <!-- Admin Dashboard (Hidden by default) -->
-    <section id="admin-dashboard" class="admin-container" style="display: none;">
-        <h2>ADMIN <span>DASHBOARD</span></h2>
-        <div class="admin-controls">
-            <input type="date" id="admin-date" onchange="fetchAdminSlots()">
-            <button onclick="closeAdmin()">Logout Admin</button>
+    <section id="admin-dashboard" class="admin-container">
+        <div class="admin-header">
+            <h2>ADMIN <span>DASHBOARD</span></h2>
+            <div class="admin-controls">
+                <input type="date" id="admin-date" onchange="fetchAdminSlots()">
+                <button class="btn-logout" onclick="closeAdmin()">Logout Admin</button>
+            </div>
         </div>
         <table class="admin-table">
             <thead>
                 <tr>
-                    <th>Slot</th>
+                    <th>Slot Time</th>
                     <th>User Details</th>
                     <th>Status</th>
                     <th>Actions</th>
@@ -97,10 +206,281 @@
                 <input type="email" id="email" placeholder="Email Address" required>
                 <button type="submit" class="btn-primary" id="submitBtn">REQUEST SLOT</button>
             </form>
-            <p id="formMessage" style="display:none; text-align:center; margin-top:10px;"></p>
+            <p id="formMessage" style="display:none; text-align:center; margin-top:10px; font-weight:bold;"></p>
         </div>
     </div>
 
-    <script src="script.js"></script>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        // Pre-defined 2-Hour Slots
+        const ALL_SLOTS = [
+            "07:00 AM - 09:00 AM", "09:00 AM - 11:00 AM", "11:00 AM - 01:00 PM",
+            "01:00 PM - 03:00 PM", "03:00 PM - 05:00 PM", "06:00 PM - 08:00 PM",
+            "08:00 PM - 10:00 PM", "10:00 PM - 12:00 AM"
+        ];
+
+        let selectedSlotToBook = null;
+
+        // Initialize Dates & Clock on Page Load
+        document.addEventListener("DOMContentLoaded", () => {
+            const today = new Date().toLocaleDateString('en-CA'); // Gets YYYY-MM-DD locally
+            document.getElementById('booking-date').value = today;
+            document.getElementById('admin-date').value = today;
+            
+            // Initial fetch
+            fetchSlots();
+            
+            // Live IST Clock
+            setInterval(() => {
+                document.getElementById('current-time-display').innerText = `IST: ${new Date().toLocaleTimeString('en-IN', {timeZone: 'Asia/Kolkata', hour: '2-digit', minute:'2-digit'})}`;
+            }, 1000);
+        });
+
+        // Navigation Actions
+        function goHome() {
+            closeAdmin(); // Ensure Admin is closed
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function smoothScroll(targetId) {
+            document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function toggleMenu() {
+            document.getElementById('menuLinks').classList.toggle('active');
+        }
+
+        // Logic to Expire Slots based on Current Date/Time
+        function isSlotExpired(slotStr, dateStr) {
+            const todayStr = new Date().toLocaleDateString('en-CA'); 
+            
+            // If date selected is in the past
+            if (dateStr < todayStr) return true; 
+            // If date selected is in the future
+            if (dateStr > todayStr) return false; 
+
+            // If date is today, check the specific start time of the slot
+            const startTime = slotStr.split(" - ")[0];
+            const match = startTime.match(/(\d+):(\d+)\s(AM|PM)/);
+            
+            let hours = parseInt(match[1]);
+            const minutes = parseInt(match[2]);
+            
+            if (match[3] === "PM" && hours !== 12) hours += 12;
+            if (match[3] === "AM" && hours === 12) hours = 0;
+
+            const slotDate = new Date();
+            slotDate.setHours(hours, minutes, 0, 0);
+
+            // If current time has passed the start time, mark as expired
+            return new Date() > slotDate;
+        }
+
+        // Fetch User Slots
+        async function fetchSlots() {
+            const date = document.getElementById('booking-date').value;
+            const slotsArea = document.getElementById('slots-area');
+            slotsArea.innerHTML = `<div class="loader">Refreshing Database...</div>`;
+
+            try {
+                // Calls your Vercel Serverless Function
+                const res = await fetch('/api/db', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: "getSlots", date: date })
+                });
+                const response = await res.json();
+                const bookings = response.data || [];
+
+                slotsArea.innerHTML = ""; // Clear loader
+                
+                // Loop through all predefined slots
+                ALL_SLOTS.forEach(slot => {
+                    const bookingForSlot = bookings.find(b => b.slot === slot);
+                    
+                    let status = "AVAILABLE";
+                    let statusClass = "status-available";
+                    let btnDisabled = false;
+                    let btnText = "BOOK";
+
+                    // 1. Check Expiration First
+                    if (isSlotExpired(slot, date) && !bookingForSlot) {
+                        status = "EXPIRED"; 
+                        statusClass = "status-expired"; 
+                        btnDisabled = true; 
+                        btnText = "--";
+                    } 
+                    // 2. Check Database Booking Status
+                    else if (bookingForSlot) {
+                        if(bookingForSlot.status === 'confirmed') {
+                            status = "BOOKED"; 
+                            statusClass = "status-booked"; 
+                            btnDisabled = true; 
+                            btnText = "FULL";
+                        } else if(bookingForSlot.status === 'pending') {
+                            status = "PENDING"; 
+                            statusClass = "status-pending"; 
+                            btnDisabled = true; 
+                            btnText = "WAIT";
+                        }
+                    }
+
+                    // Render UI Card
+                    slotsArea.innerHTML += `
+                        <div class="slot-card">
+                            <div>
+                                <div class="slot-time">${slot}</div>
+                                <div class="slot-price">₹2400 / 2HRS</div>
+                            </div>
+                            <div style="text-align:right;">
+                                <span class="slot-badge ${statusClass}">${status}</span><br>
+                                <button class="btn-book" ${btnDisabled ? "disabled" : ""} onclick="initiateBooking('${slot}')" style="margin-top:10px;">${btnText}</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (err) {
+                console.error(err);
+                slotsArea.innerHTML = `<div class="loader" style="color:red;">Error loading slots. Ensure Vercel /api/db is setup.</div>`;
+            }
+        }
+
+        // Modal Functions
+        function initiateBooking(slot) {
+            selectedSlotToBook = slot;
+            const date = document.getElementById('booking-date').value;
+            document.getElementById('selected-slot-text').innerText = `${slot} on ${date}`;
+            document.getElementById('bookingModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('bookingModal').style.display = 'none';
+            document.getElementById('formMessage').style.display = 'none';
+        }
+
+        // Form Submit -> Send to Database
+        document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const msg = document.getElementById('formMessage');
+            
+            btn.innerText = "Processing...";
+            btn.disabled = true;
+            
+            const payload = {
+                action: "book",
+                date: document.getElementById('booking-date').value,
+                slot: selectedSlotToBook,
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value
+            };
+
+            try {
+                await fetch('/api/db', {
+                    method: 'POST', 
+                    headers: { 'Content-Type': 'application/json' }, 
+                    body: JSON.stringify(payload)
+                });
+                
+                msg.style.color = "#2ecc71"; 
+                msg.style.display = "block";
+                msg.innerText = "Request sent! Pending Admin Approval.";
+                
+                // Reset and close after 2 seconds
+                setTimeout(() => { 
+                    closeModal(); 
+                    fetchSlots(); 
+                    document.getElementById('bookingForm').reset();
+                    btn.innerText = "REQUEST SLOT"; 
+                    btn.disabled = false;
+                }, 2000);
+
+            } catch(e) {
+                msg.style.color = "#e74c3c"; 
+                msg.style.display = "block"; 
+                msg.innerText = "Failed to connect to server.";
+                btn.innerText = "REQUEST SLOT";
+                btn.disabled = false;
+            }
+        });
+
+        // Admin Dashboard Logic
+        function openAuthModal(type) {
+            if(type === 'admin') {
+                const pass = prompt("Enter Admin Password (type: admin123)");
+                if(pass === "admin123") {
+                    document.getElementById('main-website').style.display = 'none';
+                    document.getElementById('admin-dashboard').style.display = 'block';
+                    document.getElementById('menuLinks').classList.remove('active'); // close mobile menu
+                    window.scrollTo(0,0);
+                    fetchAdminSlots();
+                } else {
+                    alert("Incorrect Password");
+                }
+            }
+        }
+
+        function closeAdmin() {
+            document.getElementById('main-website').style.display = 'block';
+            document.getElementById('admin-dashboard').style.display = 'none';
+            fetchSlots(); // Refresh user view
+        }
+
+        async function fetchAdminSlots() {
+            const date = document.getElementById('admin-date').value;
+            const tbody = document.getElementById('admin-table-body');
+            tbody.innerHTML = "<tr><td colspan='4'>Loading data...</td></tr>";
+
+            try {
+                const res = await fetch('/api/db', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: "getSlots", date: date })
+                });
+                const response = await res.json();
+                
+                tbody.innerHTML = "";
+                if(response.data.length === 0) {
+                    tbody.innerHTML = "<tr><td colspan='4'>No bookings for this date.</td></tr>";
+                    return;
+                }
+
+                response.data.forEach(b => {
+                    // Check status to colorize admin text
+                    let statColor = b.status === 'confirmed' ? '#2ecc71' : (b.status === 'pending' ? '#f39c12' : '#e74c3c');
+                    
+                    tbody.innerHTML += `
+                        <tr>
+                            <td><strong>${b.slot}</strong></td>
+                            <td>${b.name} <br> <small style="color:#666;">${b.email}</small></td>
+                            <td style="color:${statColor}; font-weight:bold;">${b.status.toUpperCase()}</td>
+                            <td>
+                                ${b.status === 'pending' ? `
+                                    <button class="btn-approve" onclick="updateStatus('${b.id}', 'confirmed')">Approve</button>
+                                    <button class="btn-deny" onclick="updateStatus('${b.id}', 'denied')">Deny</button>
+                                ` : '<span style="color:#888;">Action Completed</span>'}
+                            </td>
+                        </tr>
+                    `;
+                });
+            } catch (e) {
+                tbody.innerHTML = "<tr><td colspan='4'>Error loading data.</td></tr>";
+            }
+        }
+
+        async function updateStatus(id, newStatus) {
+            if(!confirm(`Are you sure you want to mark this as ${newStatus.toUpperCase()}?`)) return;
+            
+            // Show loading state
+            document.getElementById('admin-table-body').innerHTML = "<tr><td colspan='4'>Updating database...</td></tr>";
+
+            await fetch('/api/db', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: "updateStatus", id: id, status: newStatus })
+            });
+            
+            fetchAdminSlots(); // Refresh table
+        }
+    </script>
 </body>
 </html>
