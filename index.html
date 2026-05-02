@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKS Turf | Premium Cricket Arena</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-links">
+            <a href="#">HOME</a>
+            <a href="#gallery">GALLERY</a>
+            <a href="#about">ABOUT US</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <span class="badge"># PUNE'S TOP CRICKET ARENA</span>
+            <h1>PLAY <span>BETTER</span><br>CRICKET<br>NIGHT & DAY</h1>
+            <p>Elevate your game at AKS Turf. Professional pitch maintenance, 360-degree tournament lighting, and dugout facilities.</p>
+            <div class="hero-buttons">
+                <button class="btn-primary" onclick="openModal()">BOOK YOUR PITCH →</button>
+                <button class="btn-secondary">VIEW ARENA</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery-section">
+        <div class="gallery-header">
+            <h2>VISUALS FROM<br>THE <span>GROUND</span></h2>
+            <p>Professional pitch maintenance and tournament-grade floodlights for Pune's finest.</p>
+        </div>
+        <div class="gallery-grid">
+            <div class="img-card large" style="background-image: url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+            <div class="img-card" style="background-image: url('https://images.unsplash.com/photo-1512277104868-b778734ed945?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80');"></div>
+            <div class="img-card" style="background-image: url('https://images.unsplash.com/photo-1531415074968-036ba1b575da?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80');"></div>
+        </div>
+    </section>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>JOIN ARENA</h2>
+            <form id="bookingForm">
+                <input type="text" id="name" placeholder="Full Name" required>
+                <input type="email" id="email" placeholder="Email Address" required>
+                <input type="date" id="date" required>
+                <button type="submit" class="btn-primary" id="submitBtn">CREATE PITCH ACCOUNT</button>
+            </form>
+            <p id="formMessage" style="display:none; text-align:center; margin-top:10px; color: #2ecc71;"></p>
+        </div>
+    </div>
+
+    <!-- WhatsApp Quick Connect -->
+    <a href="https://wa.me/919175023438?text=Hello%20AKS%20Turf" target="_blank" class="whatsapp-float">
+        Connect on WhatsApp
+    </a>
+
+    <script src="script.js"></script>
+</body>
+</html>
