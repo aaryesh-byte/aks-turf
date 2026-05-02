@@ -285,7 +285,7 @@
 
             try {
                 // Calls your Vercel Serverless Function
-                const res = await fetch('/api/db', {
+                const res = await fetch('https://aks-turf-backend.vercel.app/api/db', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ action: "getSlots", date: date })
@@ -377,7 +377,7 @@
             };
 
             try {
-                await fetch('/api/db', {
+                await fetch('https://aks-turf-backend.vercel.app/api/db', {
                     method: 'POST', 
                     headers: { 'Content-Type': 'application/json' }, 
                     body: JSON.stringify(payload)
@@ -433,7 +433,7 @@
             tbody.innerHTML = "<tr><td colspan='4'>Loading data...</td></tr>";
 
             try {
-                const res = await fetch('/api/db', {
+                const res = await fetch('https://aks-turf-backend.vercel.app/api/db', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ action: "getSlots", date: date })
                 });
@@ -474,7 +474,7 @@
             // Show loading state
             document.getElementById('admin-table-body').innerHTML = "<tr><td colspan='4'>Updating database...</td></tr>";
 
-            await fetch('/api/db', {
+            await fetch('https://aks-turf-backend.vercel.app/api/db', {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ action: "updateStatus", id: id, status: newStatus })
             });
