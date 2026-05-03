@@ -24,7 +24,7 @@
         body, button, input, select { font-family: var(--font-main); }
         body { background-color: var(--bg-light); color: var(--text-dark); padding-bottom: 20px;}
 
-        /* Floating Liquid Navigation */
+        /* Floating Navigation */
         nav { 
             display: flex; justify-content: space-between; align-items: center; 
             padding: 15px 30px; background: rgba(255, 255, 255, 0.75); 
@@ -36,7 +36,6 @@
         
         .logo { font-size: 26px; color: var(--dark-green); text-decoration: none; font-weight: 800; cursor: pointer; letter-spacing: -0.5px; }
         .logo span { color: var(--primary-green); }
-        
         .nav-center { display: flex; gap: 30px; }
         .nav-center a { color: var(--dark-green); text-decoration: none; font-weight: 700; font-size: 16px; text-transform: uppercase; transition: 0.3s;}
         .nav-center a:hover { color: var(--primary-green); }
@@ -65,25 +64,16 @@
         .toast.error { border-left-color: #ef4444; }
         .toast.event { border-left-color: #a855f7; background: #faf5ff; }
 
-        /* --- UPDATED: Gradient Mesh Hero Section --- */
-        @keyframes gradientMesh {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+        /* Hero Section (Video Loop) */
         .hero { 
-            height: 100vh; 
-            background: linear-gradient(-45deg, #022c22, #064e3b, #047857, #10b981, #34d399);
-            background-size: 400% 400%;
-            animation: gradientMesh 12s ease infinite;
-            display: flex; align-items: center; justify-content: center; text-align: center;
-            border-bottom-left-radius: 40px; border-bottom-right-radius: 40px;
-            padding: 0 5%;
+            position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;
+            border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; padding: 0 5%; overflow: hidden;
         }
-        .hero-content { display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 2;}
+        .hero-video { position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; width: auto; height: auto; transform: translate(-50%, -50%); z-index: 0; object-fit: cover;}
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(6, 78, 59, 0.8), rgba(2, 44, 34, 0.9)); z-index: 1;}
+        .hero-content { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .hero-content h1 { font-size: 5rem; line-height: 1; margin: 20px 0; text-transform: uppercase; color: var(--text-light); font-weight: 800;}
-        .hero-content h1 span { color: #facc15; font-style: italic; } /* Yellow accent for contrast */
-        
+        .hero-content h1 span { color: var(--primary-green); font-style: italic; }
         .btn-primary { padding: 15px 30px; border: none; border-radius: var(--curve); font-weight: 800; cursor: pointer; background: var(--primary-green); color: var(--dark-green); transition: 0.3s; text-transform: uppercase; font-size: 16px; box-shadow: 0 10px 20px rgba(0,0,0,0.2);}
         .btn-primary:hover { background: white; transform: scale(1.05);}
         .btn-whatsapp { background: #25D366; color: white; padding: 15px; border-radius: var(--curve); width: 100%; font-weight: 800; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; font-size: 16px; margin-top: 15px; transition: 0.3s;}
@@ -99,8 +89,6 @@
         .panel-area { flex: 1; }
 
         .slot-card { background: white; border-radius: var(--curve); padding: 20px; width: 100%; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; border: 1px solid #e5e7eb; transition: 0.3s;}
-        
-        /* Greyed out style for unavailable slots */
         .slot-card.greyed-out { background-color: #f3f4f6; opacity: 0.5; border-color: #d1d5db; pointer-events: none; }
         .slot-card.greyed-out .btn-book { background: #9ca3af; color: white; }
 
@@ -128,27 +116,11 @@
         .btn-auth-outline:hover { background: #f3f4f6; border-color: #9ca3af; }
 
         /* Fullscreen Admin Layout Styles */
-        .admin-fullscreen { 
-            display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
-            z-index: 3000; background: var(--bg-light); flex-direction: row; overflow: hidden;
-        }
+        .admin-fullscreen { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 3000; background: var(--bg-light); flex-direction: row; overflow: hidden; }
         .admin-fullscreen.active { display: flex; }
-        .admin-sidebar { 
-            width: 280px; background: var(--dark-green); color: white; 
-            padding: 30px 20px; display: flex; flex-direction: column; gap: 15px; 
-            box-shadow: 4px 0 15px rgba(0,0,0,0.1); z-index: 2;
-        }
-        .admin-sidebar .logo { 
-            color: white; font-size: 28px; margin-bottom: 20px; text-align: left; 
-            padding: 0; border: none; box-shadow: none; position: static; transform: none; width: auto; 
-            backdrop-filter: none; background: transparent; pointer-events: none;
-        }
-        .admin-nav-btn { 
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); 
-            color: white; padding: 15px; border-radius: 12px; font-weight: 800; 
-            cursor: pointer; text-align: left; transition: 0.3s; font-size: 16px;
-            display: flex; align-items: center; gap: 10px;
-        }
+        .admin-sidebar { width: 280px; background: var(--dark-green); color: white; padding: 30px 20px; display: flex; flex-direction: column; gap: 15px; box-shadow: 4px 0 15px rgba(0,0,0,0.1); z-index: 2;}
+        .admin-sidebar .logo { color: white; font-size: 28px; margin-bottom: 20px; text-align: left; padding: 0; border: none; box-shadow: none; position: static; transform: none; width: auto; backdrop-filter: none; background: transparent; pointer-events: none;}
+        .admin-nav-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 15px; border-radius: 12px; font-weight: 800; cursor: pointer; text-align: left; transition: 0.3s; font-size: 16px; display: flex; align-items: center; gap: 10px; }
         .admin-nav-btn.active, .admin-nav-btn:hover { background: var(--primary-green); color: var(--dark-green); border-color: var(--primary-green); }
         .admin-close { margin-top: auto; background: #ef4444; border-color: #ef4444; justify-content: center; color: white;}
         .admin-close:hover { background: #dc2626; color: white; border-color: #dc2626; }
@@ -190,33 +162,21 @@
             .booking-layout, .slots-grid { flex-direction: column; gap: 20px; }
             .about-layout { flex-direction: column; }
             .hero-content h1 { font-size: 3.5rem; }
-            .floating-btns { bottom: 100px; } 
-            body { padding-bottom: 100px; } 
+            .floating-btns { bottom: 100px; } body { padding-bottom: 100px; } 
             .admin-fullscreen { flex-direction: column; }
             .admin-sidebar { width: 100%; padding: 20px; height: auto; border-radius: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1); z-index: 10; gap: 10px;}
             .admin-main { padding: 20px; }
             .admin-sidebar .logo { margin-bottom: 10px; font-size: 24px;}
         }
 
-        @keyframes shimmer {
-            0% { background-position: -1000px 0; }
-            100% { background-position: 1000px 0; }
-        }
-        .skeleton {
-            background: #e5e7eb;
-            background-image: linear-gradient(90deg, #e5e7eb 0px, #f3f4f6 40px, #e5e7eb 80px);
-            background-size: 1000px 100%;
-            animation: shimmer 2s infinite linear;
-            border-radius: 5px;
-        }
+        @keyframes shimmer { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
+        .skeleton { background: #e5e7eb; background-image: linear-gradient(90deg, #e5e7eb 0px, #f3f4f6 40px, #e5e7eb 80px); background-size: 1000px 100%; animation: shimmer 2s infinite linear; border-radius: 5px; }
         .skel-card { background: white; border-radius: var(--curve); padding: 20px; width: 100%; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; border: 1px solid #e5e7eb; }
         .skel-category { height: 28px; width: 220px; margin: 0 auto 15px auto; border-radius: 14px; }
         .skel-time { height: 20px; width: 150px; margin-bottom: 10px; }
         .skel-price { height: 16px; width: 60px; }
         .skel-pill { height: 24px; width: 90px; border-radius: var(--curve); margin-bottom: 12px; margin-left: auto; }
         .skel-btn { height: 38px; width: 110px; border-radius: var(--curve); }
-
-        /* Slip Receipt Styling */
         .receipt-box { background: #f9fafb; border: 1px dashed #9ca3af; padding: 20px; border-radius: 15px; margin-bottom: 15px; text-align: left; font-size: 15px;}
         .receipt-box p { margin-bottom: 8px; color: #374151;}
         .receipt-box strong { color: var(--dark-green); }
@@ -248,10 +208,15 @@
         <a href="#" onclick="handleMobileUser()"><span>👤</span>Account</a>
     </div>
 
-    <!-- Hero Section -->
+    <!-- Hero Section (Video Loop) -->
     <header id="home" class="hero">
+        <video class="hero-video" autoplay loop muted playsinline>
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-stadium-with-bright-lights-at-night-4233-large.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-overlay"></div>
         <div class="hero-content">
-            <h1>PREMIUM <span>CRICKET</span><br>EXPERIENCE</h1>
+            <h1>PREMIUM <span style="color:var(--primary-green)">CRICKET</span><br>EXPERIENCE</h1>
             <p style="color: white; margin-bottom: 20px; font-size: 18px; max-width: 600px; font-weight: 600;">Perfectly maintained pitches, tournament-grade floodlights, and towering boundary nets. Book your net session now.</p>
             <button class="btn-primary" onclick="window.location.href='#booking-section'">BOOK A SLOT →</button>
         </div>
@@ -448,12 +413,8 @@
         let selectedSlot = "";
         let slotPrice = 0;
         let globalDbBookings = []; 
-        
-        // Admin Notification Variables
         let adminPollingInterval = null;
         let lastPendingCount = 0;
-
-        // Current Booking Details for Slip
         let currentBookingData = null;
 
         function showToast(message, type = 'success') {
@@ -472,7 +433,13 @@
             const nextWeek = new Date();
             nextWeek.setDate(today.getDate() + 6);
             
-            const formatDt = (dt) => dt.toLocaleDateString('en-CA'); 
+            // Format to match exact standard expected by string comparators (YYYY-MM-DD)
+            const formatDt = (dt) => {
+                let m = ('0' + (dt.getMonth() + 1)).slice(-2);
+                let d = ('0' + dt.getDate()).slice(-2);
+                return dt.getFullYear() + '-' + m + '-' + d;
+            };
+            
             dateInput.min = formatDt(today);
             dateInput.max = formatDt(nextWeek);
             dateInput.value = formatDt(today);
@@ -549,7 +516,7 @@
                 const response = await res.json();
                 globalDbBookings = response.data || [];
 
-                const isEventDay = globalDbBookings.some(b => b.status === 'event_blocked');
+                const isEventDay = globalDbBookings.some(b => String(b.status).trim().toLowerCase() === 'event_blocked');
                 
                 if(isEventDay) {
                     if(currentUser) showToast("This date is closed for a special event!", "event");
@@ -575,19 +542,22 @@
         function buildCards(slotsArray, dbBookings, price) {
             let html = "";
             slotsArray.forEach(slot => {
-                const booking = dbBookings.find(b => b.slot === slot);
+                // VERY IMPORTANT: Trim both strings to guarantee exact match
+                const booking = dbBookings.find(b => String(b.slot).trim() === String(slot).trim());
                 let btnState = "", btnText = "BOOK PITCH", statusClass = "status-available", statusText = "AVAILABLE";
                 let cardClass = "slot-card"; 
 
                 if(booking) {
                     btnState = "disabled";
-                    cardClass = "slot-card greyed-out"; // Ensures user sees blocked/pending as greyed out
+                    cardClass = "slot-card greyed-out"; 
                     
-                    if(booking.status === 'confirmed') {
+                    let bStatus = String(booking.status).trim().toLowerCase();
+
+                    if(bStatus === 'confirmed') {
                         statusClass = "status-booked"; statusText = "UNAVAILABLE"; btnText = "PITCH BOOKED";
-                    } else if (booking.status === 'pending') {
+                    } else if (bStatus === 'pending') {
                         statusClass = "status-pending"; statusText = "PENDING APPROVAL"; btnText = "WAITING...";
-                    } else if (booking.status === 'blocked') {
+                    } else if (bStatus === 'blocked') {
                         statusClass = "status-blocked"; statusText = "SLOT CLOSED"; btnText = "BLOCKED";
                     }
                 }
@@ -614,7 +584,6 @@
             openModal('bookingModal');
         }
 
-        // UPDATED BOOKING FORM LOGIC
         document.getElementById('bookingForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const date = document.getElementById('booking-date').value;
@@ -624,7 +593,6 @@
 
             const payload = { action: "book", date: date, slot: selectedSlot, name: name, email: currentUser, phone: phone, payment: payment };
             
-            // Save for WhatsApp Slip
             currentBookingData = { date: date, slot: selectedSlot, name: name, price: slotPrice, payment: payment };
 
             closeModal('bookingModal');
@@ -636,7 +604,6 @@
                 });
                 showToast("Booking request sent! Waiting for Admin approval.", "success");
                 
-                // Show Success Slip
                 document.getElementById('slip-name').innerText = name;
                 document.getElementById('slip-date').innerText = date;
                 document.getElementById('slip-slot').innerText = selectedSlot;
@@ -646,10 +613,9 @@
 
                 fetchSlots(); 
 
-                // Automatic UPI Redirection
                 if(payment === 'UPI') {
                     const upiLink = `upi://pay?pa=aaryesh.honrao@fam&pn=AKS%20Turf&am=${slotPrice}&cu=INR&tn=Turf%20Booking%20${date}%20${selectedSlot}`;
-                    setTimeout(() => { window.location.href = upiLink; }, 1000); // Small delay to let modal open
+                    setTimeout(() => { window.location.href = upiLink; }, 1000); 
                 }
 
             } catch (error) { showToast("Booking failed.", "error"); }
@@ -681,7 +647,6 @@
                 document.getElementById('admin-date-picker').value = document.getElementById('booking-date').value || new Date().toLocaleDateString('en-CA');
             }
             loadAdminData();
-            
             lastPendingCount = 0; 
             adminPollingInterval = setInterval(() => { loadAdminData(true); }, 10000); 
         }
@@ -703,7 +668,7 @@
                 const response = await res.json();
                 const bookings = response.data || [];
 
-                const pendingBookings = bookings.filter(b => b.status === 'pending');
+                const pendingBookings = bookings.filter(b => String(b.status).trim().toLowerCase() === 'pending');
                 const pendingArea = document.getElementById('admin-pending-area');
                 const pendingList = document.getElementById('pending-list');
                 
@@ -725,24 +690,29 @@
 
                 const overviewBody = document.getElementById('overview-body');
                 overviewBody.innerHTML = ALL_SLOTS.map(slot => {
-                    const b = bookings.find(x => x.slot === slot);
+                    const b = bookings.find(x => String(x.slot).trim() === String(slot).trim());
                     let statusText = '<span style="color:green;font-weight:bold;">AVAILABLE</span>';
                     let actionBtn = `<button class="btn-action" style="background:#6b7280;" onclick="updateStatus('${date}', '${slot}', 'blocked')">Block Slot 🚫</button>`;
 
                     if (b) {
-                        if (b.status === 'confirmed') { statusText = '<span style="color:red;font-weight:bold;">BOOKED</span>'; actionBtn = `<button class="btn-action btn-deny" onclick="updateStatus('${date}', '${slot}', 'available')">Cancel Book ❌</button>`; }
-                        else if (b.status === 'pending') { statusText = '<span style="color:orange;font-weight:bold;">PENDING</span>'; actionBtn = `<span style="color:gray; font-size:12px; font-weight:800;">Review in Pending Section</span>`; }
-                        else if (b.status === 'blocked') { statusText = '<span style="color:gray;font-weight:bold;">BLOCKED (MANUAL)</span>'; actionBtn = `<button class="btn-action" style="background:#22c55e;" onclick="updateStatus('${date}', '${slot}', 'available')">Open Slot ✅</button>`; }
-                        else if (b.status === 'event_blocked') { statusText = '<span style="color:purple;font-weight:bold;">EVENT CLOSED</span>'; actionBtn = `<button class="btn-action" style="background:#ccc;" disabled>Locked by Event</button>`; }
+                        let bStat = String(b.status).trim().toLowerCase();
+                        if (bStat === 'confirmed') { statusText = '<span style="color:red;font-weight:bold;">BOOKED</span>'; actionBtn = `<button class="btn-action btn-deny" onclick="updateStatus('${date}', '${slot}', 'available')">Cancel Book ❌</button>`; }
+                        else if (bStat === 'pending') { statusText = '<span style="color:orange;font-weight:bold;">PENDING</span>'; actionBtn = `<span style="color:gray; font-size:12px; font-weight:800;">Review in Pending Section</span>`; }
+                        else if (bStat === 'blocked') { statusText = '<span style="color:gray;font-weight:bold;">BLOCKED (MANUAL)</span>'; actionBtn = `<button class="btn-action" style="background:#22c55e;" onclick="updateStatus('${date}', '${slot}', 'available')">Open Slot ✅</button>`; }
+                        else if (bStat === 'event_blocked') { statusText = '<span style="color:purple;font-weight:bold;">EVENT CLOSED</span>'; actionBtn = `<button class="btn-action" style="background:#ccc;" disabled>Locked by Event</button>`; }
                     }
 
                     return `<tr><td>${slot}</td><td>${statusText}</td><td>${actionBtn}</td></tr>`;
                 }).join('');
 
                 const detailsBody = document.getElementById('details-body');
-                const activeBookings = bookings.filter(b => b.status === 'confirmed' || b.status === 'pending');
+                const activeBookings = bookings.filter(b => {
+                    let s = String(b.status).trim().toLowerCase();
+                    return s === 'confirmed' || s === 'pending';
+                });
+                
                 detailsBody.innerHTML = activeBookings.length ? activeBookings.map(b => `
-                    <tr><td>${b.name}</td><td>${b.phone}</td><td>${b.slot}</td><td>${b.payment}</td><td style="font-weight:800; color:${b.status==='confirmed'?'green':'orange'}">${b.status.toUpperCase()}</td></tr>
+                    <tr><td>${b.name}</td><td>${b.phone}</td><td>${b.slot}</td><td>${b.payment}</td><td style="font-weight:800; color:${String(b.status).trim().toLowerCase()==='confirmed'?'green':'orange'}">${String(b.status).trim().toUpperCase()}</td></tr>
                 `).join('') : `<tr><td colspan="5" style="text-align:center; padding: 20px; color: #6b7280;">No active user bookings for this date.</td></tr>`;
 
             } catch(e) { if(!isBackground) showToast("Admin fetch failed.", "error"); }
