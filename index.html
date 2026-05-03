@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AKS Turf | Premium Cricket Arena</title>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Simple, Rounded & Satisfying Font (Nunito) -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400;1,700&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -15,41 +16,118 @@
             --text-dark: #1f2937;
             --text-light: #ffffff;
             --curve: 25px; /* STRICT CURVED CORNERS */
+            --font-main: 'Nunito', sans-serif;
         }
 
-        html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+        html { scroll-behavior: smooth; scroll-padding-top: 120px; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--font-body); background-color: var(--bg-light); color: var(--text-dark); }
+        body, button, input, select { font-family: var(--font-main); }
+        body { background-color: var(--bg-light); color: var(--text-dark); }
 
-        /* Navigation */
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; background: var(--bg-light); box-shadow: 0 4px 15px rgba(0,0,0,0.05); position: fixed; width: 100%; z-index: 1000; top: 0; border-bottom-left-radius: var(--curve); border-bottom-right-radius: var(--curve);}
-        .logo { font-family: var(--font-heading); font-size: 28px; color: var(--dark-green); text-decoration: none; font-weight: bold; cursor: pointer; }
+        /* Floating Liquid Navigation */
+        nav { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 15px 30px; 
+            background: rgba(255, 255, 255, 0.75); /* Lucid transparency */
+            backdrop-filter: blur(15px); /* Liquid blur effect */
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); 
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            position: fixed; 
+            width: 90%; 
+            max-width: 1200px;
+            z-index: 1000; 
+            top: 20px; 
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 50px; /* Pill shape floating island */
+        }
+        
+        .logo { font-size: 26px; color: var(--dark-green); text-decoration: none; font-weight: 800; cursor: pointer; letter-spacing: -0.5px; }
         .logo span { color: var(--primary-green); }
         
         .nav-center { display: flex; gap: 30px; }
-        .nav-center a { color: var(--dark-green); text-decoration: none; font-weight: bold; font-size: 16px; text-transform: uppercase; transition: 0.3s;}
+        .nav-center a { color: var(--dark-green); text-decoration: none; font-weight: 700; font-size: 16px; text-transform: uppercase; transition: 0.3s;}
         .nav-center a:hover { color: var(--primary-green); }
 
         /* Permanent Hamburger Menu */
-        .hamburger { display: flex; flex-direction: column; cursor: pointer; gap: 6px; z-index: 1001; background: var(--bg-offwhite); padding: 10px; border-radius: 10px;}
-        .hamburger span { width: 30px; height: 4px; background: var(--dark-green); border-radius: var(--curve); transition: 0.3s; }
+        .hamburger { display: flex; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1001; background: rgba(240, 253, 244, 0.8); padding: 12px; border-radius: 50%; width: 45px; height: 45px; justify-content: center; align-items: center; transition: 0.3s;}
+        .hamburger:hover { background: rgba(220, 252, 231, 0.9); }
+        .hamburger span { width: 22px; height: 3px; background: var(--dark-green); border-radius: 5px; transition: 0.3s; }
         
-        /* Sliding Menu */
-        .menu-links { position: fixed; top: 85px; right: -300px; flex-direction: column; background: var(--dark-green); width: 250px; padding: 30px; border-bottom-left-radius: var(--curve); border-top-left-radius: var(--curve); transition: 0.4s ease-in-out; display: flex; gap: 20px; box-shadow: -5px 5px 15px rgba(0,0,0,0.1);}
-        .menu-links.active { right: 0; }
-        .menu-links a, .menu-links button { color: white; text-decoration: none; font-size: 16px; font-weight: bold; background: none; border: none; cursor: pointer; text-align: right; width: 100%;}
-        .menu-links button:hover { color: var(--primary-green); }
+        /* Floating Dropdown Menu */
+        .menu-links { 
+            position: absolute; 
+            top: 75px; /* Directly below the island */
+            right: 15px; 
+            flex-direction: column; 
+            background: rgba(6, 78, 59, 0.85); /* Lucid Dark Green */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.2);
+            width: 240px; 
+            padding: 25px; 
+            border-radius: 25px; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy pop up */
+            display: flex; 
+            gap: 15px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            
+            /* Hidden State */
+            opacity: 0;
+            transform: translateY(-20px) scale(0.95);
+            pointer-events: none;
+            transform-origin: top right;
+        }
+        .menu-links.active { 
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+        
+        .menu-links a, .menu-links button { color: white; text-decoration: none; font-size: 16px; font-weight: 700; background: none; border: none; cursor: pointer; text-align: right; width: 100%; transition: 0.2s;}
+        .menu-links button:hover, .menu-links a:hover { color: var(--primary-green); }
         .admin-link { color: #facc15 !important; }
+
+        /* Custom Notifications (Toasts) */
+        .toast-container {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            pointer-events: none; /* Let clicks pass through empty space */
+        }
+        .toast {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-left: 5px solid var(--primary-green);
+            padding: 15px 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            font-weight: 700;
+            color: var(--dark-green);
+            transform: translateX(120%);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: auto;
+            max-width: 320px;
+        }
+        .toast.show { transform: translateX(0); }
+        .toast.error { border-left-color: #ef4444; }
 
         /* Hero */
         .hero { height: 100vh; background: linear-gradient(rgba(6, 78, 59, 0.8), rgba(6, 78, 59, 0.6)), url('https://images.unsplash.com/photo-1531415074968-036ba1b575da?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover; display: flex; align-items: center; padding: 0 5%; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px;}
-        .hero-content h1 { font-family: var(--font-heading); font-size: 5rem; line-height: 1; margin: 20px 0; text-transform: uppercase; color: var(--text-light);}
+        .hero-content h1 { font-size: 5rem; line-height: 1; margin: 20px 0; text-transform: uppercase; color: var(--text-light); font-weight: 800;}
         .hero-content h1 span { color: var(--primary-green); font-style: italic; }
-        .btn-primary { padding: 15px 30px; border: none; border-radius: var(--curve); font-weight: bold; cursor: pointer; background: var(--primary-green); color: white; transition: 0.3s; text-transform: uppercase; font-size: 16px;}
+        .btn-primary { padding: 15px 30px; border: none; border-radius: var(--curve); font-weight: 800; cursor: pointer; background: var(--primary-green); color: white; transition: 0.3s; text-transform: uppercase; font-size: 16px; font-family: var(--font-main);}
         .btn-primary:hover { background: var(--dark-green); transform: scale(1.05);}
 
         /* Section Titles */
-        .section-title { font-family: var(--font-heading); font-size: 3.5rem; color: var(--dark-green); text-transform: uppercase; margin-bottom: 20px;}
+        .section-title { font-size: 3.5rem; font-weight: 800; color: var(--dark-green); text-transform: uppercase; margin-bottom: 20px;}
         .section-title span { color: var(--primary-green); font-style: italic; }
 
         /* Gallery */
@@ -59,29 +137,29 @@
 
         /* Booking Section */
         .booking-container { padding: 80px 5%; background: var(--bg-offwhite); color: var(--text-dark); border-radius: 40px; margin: 20px 5%; border: 2px solid #dcfce7;}
-        .slot-category { font-family: var(--font-heading); font-size: 2rem; margin: 30px 0 15px 0; color: var(--dark-green);}
+        .slot-category { font-size: 2rem; font-weight: 800; margin: 30px 0 15px 0; color: var(--dark-green);}
         
         .booking-layout { display: flex; gap: 40px; }
         .slots-area { flex: 2; display: flex; flex-wrap: wrap; gap: 15px; }
         .panel-area { flex: 1; }
 
         .slot-card { background: white; border-radius: var(--curve); padding: 20px; width: calc(50% - 15px); box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; border: 1px solid #e5e7eb;}
-        .status-available { background: #dcfce7; color: #166534; padding: 5px 10px; border-radius: var(--curve); font-size: 12px; font-weight: bold;}
-        .status-booked { background: #fee2e2; color: #991b1b; padding: 5px 10px; border-radius: var(--curve); font-size: 12px; font-weight: bold;}
-        .btn-book { background: var(--dark-green); color: white; border: none; padding: 10px 20px; border-radius: var(--curve); cursor: pointer; font-weight: bold; margin-top: 10px; transition: 0.3s;}
+        .status-available { background: #dcfce7; color: #166534; padding: 5px 10px; border-radius: var(--curve); font-size: 12px; font-weight: 800;}
+        .status-booked { background: #fee2e2; color: #991b1b; padding: 5px 10px; border-radius: var(--curve); font-size: 12px; font-weight: 800;}
+        .btn-book { background: var(--dark-green); color: white; border: none; padding: 10px 20px; border-radius: var(--curve); cursor: pointer; font-weight: 800; margin-top: 10px; transition: 0.3s; font-family: var(--font-main);}
         .btn-book:hover:not(:disabled) { background: var(--primary-green); }
         .btn-book:disabled { background: #d1d5db; color: #6b7280; cursor: not-allowed; }
 
-        .panel-card { background: white; padding: 20px; border-radius: var(--curve); box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: sticky; top: 100px; border: 1px solid #e5e7eb;}
+        .panel-card { background: white; padding: 20px; border-radius: var(--curve); box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: sticky; top: 120px; border: 1px solid #e5e7eb;}
         .date-picker-box { background: var(--dark-green); color: white; padding: 15px; border-radius: var(--curve); }
-        .date-picker-box input { background: transparent; border: none; color: white; font-size: 18px; font-weight: bold; outline: none; width: 100%; color-scheme: dark;}
-        .btn-refresh { width: 100%; padding: 15px; margin-top: 15px; background: #f3f4f6; color: var(--dark-green); border: none; border-radius: var(--curve); cursor: pointer; font-weight: bold; transition: 0.3s;}
+        .date-picker-box input { background: transparent; border: none; color: white; font-size: 18px; font-weight: 800; outline: none; width: 100%; color-scheme: dark;}
+        .btn-refresh { width: 100%; padding: 15px; margin-top: 15px; background: #f3f4f6; color: var(--dark-green); border: none; border-radius: var(--curve); cursor: pointer; font-weight: 800; transition: 0.3s; font-family: var(--font-main);}
         .btn-refresh:hover { background: #e5e7eb; }
 
         /* Scrolling Reviews */
         .reviews-section { padding: 50px 0; overflow: hidden; background: var(--bg-light); }
         .reviews-track { display: flex; gap: 20px; animation: scrollLeft 20s linear infinite; width: max-content; }
-        .review-card { background: var(--bg-offwhite); padding: 20px; border-radius: var(--curve); width: 350px; color: var(--dark-green); font-weight: 500; border: 1px solid #dcfce7;}
+        .review-card { background: var(--bg-offwhite); padding: 20px; border-radius: var(--curve); width: 350px; color: var(--dark-green); font-weight: 600; border: 1px solid #dcfce7;}
         @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* About Us & Location Layout */
@@ -89,8 +167,8 @@
         .about-layout { display: flex; gap: 40px; align-items: center;}
         
         .about-text-box { flex: 1; color: var(--text-dark); }
-        .about-text-box h3 { font-size: 24px; color: var(--dark-green); margin-bottom: 15px;}
-        .about-text-box p { font-size: 16px; line-height: 1.6; margin-bottom: 20px;}
+        .about-text-box h3 { font-size: 24px; font-weight: 800; color: var(--dark-green); margin-bottom: 15px;}
+        .about-text-box p { font-size: 16px; line-height: 1.6; margin-bottom: 20px; font-weight: 600;}
         .contact-pill { background: var(--bg-offwhite); padding: 15px 20px; border-radius: var(--curve); border: 1px solid #dcfce7; margin-bottom: 15px;}
         .contact-pill strong { color: var(--dark-green); }
         
@@ -107,8 +185,8 @@
         /* Modals & Forms */
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(6, 78, 59, 0.8); backdrop-filter: blur(5px);}
         .modal-content { background: white; margin: 10% auto; padding: 40px; width: 90%; max-width: 450px; border-radius: var(--curve); position: relative; border: 4px solid var(--primary-green);}
-        .close { position: absolute; right: 20px; top: 15px; font-size: 24px; cursor: pointer; color: var(--dark-green); font-weight: bold;}
-        input, select { width: 100%; padding: 15px; margin: 10px 0; border: 2px solid #e5e7eb; border-radius: var(--curve); outline: none; font-size: 16px;}
+        .close { position: absolute; right: 20px; top: 15px; font-size: 28px; cursor: pointer; color: var(--dark-green); font-weight: 800;}
+        input, select { width: 100%; padding: 15px; margin: 10px 0; border: 2px solid #e5e7eb; border-radius: var(--curve); outline: none; font-size: 16px; font-family: var(--font-main); font-weight: 600;}
         input:focus, select:focus { border-color: var(--primary-green); }
         
         /* Cricket Animation Loader */
@@ -123,18 +201,22 @@
 
         /* Mobile Adjustments */
         @media(max-width: 768px) {
+            nav { width: 95%; padding: 10px 20px; }
             .nav-center { display: none; }
             .booking-layout { flex-direction: column-reverse; }
             .slot-card { width: 100%; }
             .about-layout { flex-direction: column; }
             .map-box { width: 100%; height: 300px; }
-            .hero-content h1 { font-size: 4rem; }
+            .hero-content h1 { font-size: 3.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Nav -->
+    <!-- Custom Toast Notifications Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Island Nav -->
     <nav>
         <a href="#home" class="logo">⚡ AKS <span>TURF</span></a>
         
@@ -145,18 +227,18 @@
             <a href="#about">About Us</a>
         </div>
 
-        <!-- Hamburger Icon (Always Visible) -->
+        <!-- Hamburger Icon -->
         <div class="hamburger" onclick="toggleMenu()">
             <span></span><span></span><span></span>
         </div>
 
-        <!-- Sliding Menu for Auth -->
+        <!-- Floating Bouncy Menu -->
         <div class="menu-links" id="menuLinks">
             <div id="auth-buttons">
                 <button onclick="openModal('loginModal')">🔒 Login / Sign Up</button>
             </div>
             <div id="user-buttons" style="display:none;">
-                <span id="user-greeting" style="color:var(--primary-green); font-weight:bold; display:block; text-align:right; margin-bottom:10px;">Hi, User</span>
+                <span id="user-greeting" style="color:var(--primary-green); font-weight:800; display:block; text-align:right; margin-bottom:10px;">Hi, User</span>
                 <button onclick="logout()" style="color:#ef4444;">🚪 Logout</button>
             </div>
             <hr style="border-color: rgba(255,255,255,0.2); margin: 10px 0;">
@@ -168,7 +250,7 @@
     <header id="home" class="hero">
         <div class="hero-content">
             <h1>PREMIUM <span style="color:var(--primary-green)">CRICKET</span><br>EXPERIENCE</h1>
-            <p style="color: white; margin-bottom: 20px; font-size: 18px; max-width: 500px;">Perfectly maintained pitches, tournament-grade floodlights, and towering boundary nets. Book your net session now.</p>
+            <p style="color: white; margin-bottom: 20px; font-size: 18px; max-width: 500px; font-weight: 600;">Perfectly maintained pitches, tournament-grade floodlights, and towering boundary nets. Book your net session now.</p>
             <button class="btn-primary" onclick="window.location.href='#booking-section'">BOOK A SLOT →</button>
         </div>
     </header>
@@ -190,13 +272,13 @@
         <div class="booking-layout">
             <div class="slots-area" id="slots-area">
                 <!-- Slots Injected via JS -->
-                <div style="width:100%; text-align:center; padding: 20px; color: var(--dark-green); font-weight:bold;">Loading Database...</div>
+                <div style="width:100%; text-align:center; padding: 20px; color: var(--dark-green); font-weight:800;">Loading Database...</div>
             </div>
 
             <div class="panel-area">
                 <div class="panel-card">
                     <div class="date-picker-box">
-                        <label style="font-size: 12px; margin-bottom: 5px; display: block; color: #a7f3d0;">SELECT MATCH DATE</label>
+                        <label style="font-size: 12px; margin-bottom: 5px; display: block; color: #a7f3d0; font-weight: 800;">SELECT MATCH DATE</label>
                         <input type="date" id="booking-date" onchange="fetchSlots()">
                     </div>
                     <button class="btn-refresh" onclick="fetchSlots()">🔄 REFRESH SLOTS</button>
@@ -259,9 +341,9 @@
             <input type="email" id="auth-email" placeholder="Email Address">
             <input type="password" id="auth-pass" placeholder="Password">
             <button class="btn-primary" style="width:100%;" onclick="handleAuth()">SUBMIT</button>
-            <p style="margin-top:15px; font-size: 14px; text-align:center;">
-                <a href="#" style="color:var(--dark-green);" onclick="alert('Password reset link sent to your email from tattvagrids@gmail.com')">Forgot Password?</a> | 
-                <a href="#" style="color:var(--primary-green); font-weight:bold;" onclick="document.getElementById('auth-title').innerHTML='SIGN<span>UP</span>'">Create Account</a>
+            <p style="margin-top:15px; font-size: 14px; text-align:center; font-weight: 700;">
+                <a href="#" style="color:var(--dark-green);" onclick="showToast('Password reset link sent to your email from tattvagrids@gmail.com')">Forgot Password?</a> | 
+                <a href="#" style="color:var(--primary-green); font-weight:800;" onclick="document.getElementById('auth-title').innerHTML='SIGN<span>UP</span>'">Create Account</a>
             </p>
         </div>
     </div>
@@ -271,7 +353,7 @@
         <div class="modal-content">
             <span class="close" onclick="closeModal('bookingModal')">&times;</span>
             <h2 class="section-title" style="font-size: 2rem;">CONFIRM <span>SLOT</span></h2>
-            <p id="selected-slot-text" style="color: var(--dark-green); font-weight: bold; background: var(--bg-offwhite); padding: 10px; border-radius: 10px; margin-bottom: 15px;"></p>
+            <p id="selected-slot-text" style="color: var(--dark-green); font-weight: 800; background: var(--bg-offwhite); padding: 10px; border-radius: 10px; margin-bottom: 15px;"></p>
             
             <form id="bookingForm">
                 <input type="text" id="b-name" placeholder="Captain's Full Name" required>
@@ -295,9 +377,9 @@
 
             <!-- Receipt Slip -->
             <div class="slip" id="receipt-slip">
-                <h3 style="color:var(--dark-green);">🏏 BOOKING SLIP</h3>
-                <p id="slip-details" style="color:#333; margin:10px 0; font-size:15px; text-align:left; line-height: 1.6;"></p>
-                <p style="font-weight:bold; color:red; font-size: 14px;">Action Required: Send a WhatsApp message to +91 91750 23438 to confirm!</p>
+                <h3 style="color:var(--dark-green); font-weight: 800;">🏏 BOOKING SLIP</h3>
+                <p id="slip-details" style="color:#333; margin:10px 0; font-size:15px; text-align:left; line-height: 1.6; font-weight: 600;"></p>
+                <p style="font-weight:800; color:red; font-size: 14px;">Action Required: Send a WhatsApp message to +91 91750 23438 to confirm!</p>
                 <a href="https://wa.me/919175023438?text=I%20have%20booked%20a%20slot!" target="_blank" class="btn-primary" style="display:block; margin-top:15px; background:#25D366; text-decoration:none;">Confirm via WhatsApp</a>
             </div>
         </div>
@@ -311,6 +393,25 @@
         let currentUser = null;
         let slotPrice = 0;
         let selectedSlot = "";
+
+        // Custom Toast Notification Logic
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            if (type === 'error') toast.classList.add('error');
+            toast.innerText = message;
+            container.appendChild(toast);
+            
+            // Trigger slide-in
+            setTimeout(() => toast.classList.add('show'), 10);
+            
+            // Auto slide-out & remove
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 400); // Wait for transition
+            }, 3500);
+        }
 
         // On Load
         document.addEventListener("DOMContentLoaded", () => {
@@ -341,7 +442,9 @@
                 localStorage.setItem('turf_user', email);
                 checkLoginState();
                 closeModal('loginModal');
-                alert("Successfully logged in!");
+                showToast("Successfully logged in!");
+            } else {
+                showToast("Please enter a valid email.", "error");
             }
         }
         function checkLoginState() {
@@ -355,13 +458,17 @@
                 document.getElementById('user-buttons').style.display = 'none';
             }
         }
-        function logout() { localStorage.removeItem('turf_user'); checkLoginState(); }
+        function logout() { 
+            localStorage.removeItem('turf_user'); 
+            checkLoginState(); 
+            showToast("Successfully logged out!"); 
+        }
 
         // Fetch Slots
         async function fetchSlots() {
             const date = document.getElementById('booking-date').value;
             const area = document.getElementById('slots-area');
-            area.innerHTML = "<div style='width:100%; text-align:center; padding: 20px; font-weight:bold;'>Fetching Available Pitches...</div>";
+            area.innerHTML = "<div style='width:100%; text-align:center; padding: 20px; font-weight:800;'>Fetching Available Pitches...</div>";
 
             try {
                 // IMPORTANT: CHANGE THIS TO YOUR VERCEL API URL!
@@ -379,7 +486,7 @@
                                  + buildCards(NIGHT_SLOTS, dbBookings, 3400) + `</div>`;
 
             } catch (e) {
-                area.innerHTML = "<p style='color:red;'>Failed to connect to server. Check Vercel API.</p>";
+                area.innerHTML = "<p style='color:red; font-weight:700;'>Failed to connect to server. Check Vercel API.</p>";
             }
         }
 
@@ -395,8 +502,8 @@
                 html += `
                 <div class="slot-card">
                     <div>
-                        <div style="font-weight:bold; font-size:16px; color:var(--dark-green);">${slot}</div>
-                        <div style="color:#666; font-size:14px; margin-top:5px;">₹${price} / 2HRS</div>
+                        <div style="font-weight:800; font-size:16px; color:var(--dark-green);">${slot}</div>
+                        <div style="color:#666; font-size:14px; margin-top:5px; font-weight:700;">₹${price} / 2HRS</div>
                     </div>
                     <div style="text-align:right;">
                         <span class="${statusClass}">${statusText}</span><br>
@@ -409,7 +516,7 @@
 
         function openBooking(slot, price) {
             if(!currentUser) {
-                alert("You must Log In or Sign Up before booking.");
+                showToast("You must Log In or Sign Up before booking.", "error");
                 openModal('loginModal');
                 return;
             }
@@ -462,6 +569,8 @@
                     <strong>Payment Method:</strong> ${payment}
                 `;
 
+                showToast("Booking Successful!", "success");
+
                 // Handle UPI Auto-Redirect
                 if(payment === 'UPI') {
                     setTimeout(() => {
@@ -471,7 +580,7 @@
 
                 fetchSlots(); // Update background UI
             } catch (error) {
-                alert("Booking failed. Server error.");
+                showToast("Booking failed. Server error.", "error");
                 loader.style.display = 'none';
                 form.style.display = 'block';
             }
