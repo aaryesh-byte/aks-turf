@@ -65,47 +65,29 @@
         .toast.error { border-left-color: #ef4444; }
         .toast.event { border-left-color: #a855f7; background: #faf5ff; }
 
-        /* --- NEW: Hero Section with Looping Video --- */
+        /* --- UPDATED: Gradient Mesh Hero Section --- */
+        @keyframes gradientMesh {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
         .hero { 
-            position: relative;
             height: 100vh; 
+            background: linear-gradient(-45deg, #022c22, #064e3b, #047857, #10b981, #34d399);
+            background-size: 400% 400%;
+            animation: gradientMesh 12s ease infinite;
             display: flex; align-items: center; justify-content: center; text-align: center;
             border-bottom-left-radius: 40px; border-bottom-right-radius: 40px;
             padding: 0 5%;
-            overflow: hidden;
         }
-        .hero-video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%);
-            z-index: 0;
-            object-fit: cover;
-        }
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* Gradient overlay to ensure perfect text readability and match brand colors */
-            background: linear-gradient(rgba(6, 78, 59, 0.8), rgba(2, 44, 34, 0.9)); 
-            z-index: 1;
-        }
-        .hero-content { 
-            position: relative; 
-            z-index: 2; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-        }
+        .hero-content { display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 2;}
         .hero-content h1 { font-size: 5rem; line-height: 1; margin: 20px 0; text-transform: uppercase; color: var(--text-light); font-weight: 800;}
-        .hero-content h1 span { color: var(--primary-green); font-style: italic; }
+        .hero-content h1 span { color: #facc15; font-style: italic; } /* Yellow accent for contrast */
         
-        .btn-primary { padding: 15px 30px; border: none; border-radius: var(--curve); font-weight: 800; cursor: pointer; background: var(--primary-green); color: white; transition: 0.3s; text-transform: uppercase; font-size: 16px;}
-        .btn-primary:hover { background: var(--dark-green); transform: scale(1.05);}
+        .btn-primary { padding: 15px 30px; border: none; border-radius: var(--curve); font-weight: 800; cursor: pointer; background: var(--primary-green); color: var(--dark-green); transition: 0.3s; text-transform: uppercase; font-size: 16px; box-shadow: 0 10px 20px rgba(0,0,0,0.2);}
+        .btn-primary:hover { background: white; transform: scale(1.05);}
+        .btn-whatsapp { background: #25D366; color: white; padding: 15px; border-radius: var(--curve); width: 100%; font-weight: 800; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; font-size: 16px; margin-top: 15px; transition: 0.3s;}
+        .btn-whatsapp:hover { background: #16a34a; transform: translateY(-2px); }
 
         /* Booking Section */
         .booking-container { padding: 80px 5%; background: var(--bg-offwhite); color: var(--text-dark); border-radius: 40px; margin: 20px 5%; border: 2px solid #dcfce7;}
@@ -119,8 +101,8 @@
         .slot-card { background: white; border-radius: var(--curve); padding: 20px; width: 100%; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; border: 1px solid #e5e7eb; transition: 0.3s;}
         
         /* Greyed out style for unavailable slots */
-        .slot-card.greyed-out { background-color: #f3f4f6; opacity: 0.6; border-color: #d1d5db; pointer-events: none; }
-        .slot-card.greyed-out .btn-book { background: #d1d5db; color: #6b7280; }
+        .slot-card.greyed-out { background-color: #f3f4f6; opacity: 0.5; border-color: #d1d5db; pointer-events: none; }
+        .slot-card.greyed-out .btn-book { background: #9ca3af; color: white; }
 
         .status-available { background: #dcfce7; color: #166534; padding: 5px 10px; border-radius: var(--curve); font-size: 12px; font-weight: 800;}
         .status-booked { background: #fee2e2; color: #991b1b; padding: 5px 10px; border-radius: var(--curve); font-size: 12px; font-weight: 800;}
@@ -128,7 +110,7 @@
         .status-blocked { background: #e5e7eb; color: #374151; padding: 5px 10px; border-radius: var(--curve); font-size: 12px; font-weight: 800;}
         
         .btn-book { background: var(--dark-green); color: white; border: none; padding: 10px 20px; border-radius: var(--curve); cursor: pointer; font-weight: 800; margin-top: 10px; transition: 0.3s;}
-        .btn-book:hover:not(:disabled) { background: var(--primary-green); }
+        .btn-book:hover:not(:disabled) { background: var(--primary-green); color: var(--dark-green); }
 
         .panel-card { background: white; padding: 20px; border-radius: var(--curve); box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: sticky; top: 120px; border: 1px solid #e5e7eb;}
         .date-picker-box { background: var(--dark-green); color: white; padding: 15px; border-radius: var(--curve); }
@@ -140,7 +122,7 @@
         input, select { width: 100%; padding: 15px; margin: 10px 0; border: 2px solid #e5e7eb; border-radius: 15px; outline: none; font-size: 16px; font-weight: 600;}
         input:focus, select:focus { border-color: var(--primary-green); }
 
-        .btn-auth-solid { background: var(--primary-green); color: white; border: none; padding: 15px; border-radius: 12px; width: 100%; font-size: 18px; font-weight: 800; display: flex; justify-content: center; align-items: center; gap: 10px; cursor: pointer; box-shadow: 0 4px 15px rgba(52, 211, 153, 0.4); transition: 0.3s; margin-top: 10px;}
+        .btn-auth-solid { background: var(--primary-green); color: var(--dark-green); border: none; padding: 15px; border-radius: 12px; width: 100%; font-size: 18px; font-weight: 800; display: flex; justify-content: center; align-items: center; gap: 10px; cursor: pointer; box-shadow: 0 4px 15px rgba(52, 211, 153, 0.4); transition: 0.3s; margin-top: 10px;}
         .btn-auth-solid:hover { background: #10b981; transform: translateY(-2px); }
         .btn-auth-outline { background: white; color: #4b5563; border: 1px solid #d1d5db; padding: 15px; border-radius: 12px; width: 100%; font-size: 18px; font-weight: 800; display: flex; justify-content: center; align-items: center; gap: 10px; cursor: pointer; margin-top: 15px; transition: 0.3s; }
         .btn-auth-outline:hover { background: #f3f4f6; border-color: #9ca3af; }
@@ -233,6 +215,11 @@
         .skel-price { height: 16px; width: 60px; }
         .skel-pill { height: 24px; width: 90px; border-radius: var(--curve); margin-bottom: 12px; margin-left: auto; }
         .skel-btn { height: 38px; width: 110px; border-radius: var(--curve); }
+
+        /* Slip Receipt Styling */
+        .receipt-box { background: #f9fafb; border: 1px dashed #9ca3af; padding: 20px; border-radius: 15px; margin-bottom: 15px; text-align: left; font-size: 15px;}
+        .receipt-box p { margin-bottom: 8px; color: #374151;}
+        .receipt-box strong { color: var(--dark-green); }
     </style>
 </head>
 <body>
@@ -261,16 +248,10 @@
         <a href="#" onclick="handleMobileUser()"><span>👤</span>Account</a>
     </div>
 
-    <!-- --- UPDATED: Hero Section with Looping Video & Dark Overlay --- -->
+    <!-- Hero Section -->
     <header id="home" class="hero">
-        <video class="hero-video" autoplay loop muted playsinline>
-            <!-- A high-quality abstract stadium/lights placeholder video from Mixkit -->
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-stadium-with-bright-lights-at-night-4233-large.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <div class="hero-overlay"></div>
         <div class="hero-content">
-            <h1>PREMIUM <span style="color:var(--primary-green)">CRICKET</span><br>EXPERIENCE</h1>
+            <h1>PREMIUM <span>CRICKET</span><br>EXPERIENCE</h1>
             <p style="color: white; margin-bottom: 20px; font-size: 18px; max-width: 600px; font-weight: 600;">Perfectly maintained pitches, tournament-grade floodlights, and towering boundary nets. Book your net session now.</p>
             <button class="btn-primary" onclick="window.location.href='#booking-section'">BOOK A SLOT →</button>
         </div>
@@ -289,9 +270,7 @@
         <h2 class="section-title" style="text-align: center;">SELECT <span>SLOT</span></h2>
         
         <div class="booking-layout">
-            <div class="slots-area" id="slots-area">
-                <!-- Skeleton loader injected via JS -->
-            </div>
+            <div class="slots-area" id="slots-area"></div>
             <div class="panel-area">
                 <div class="panel-card">
                     <div class="date-picker-box">
@@ -339,18 +318,15 @@
         <div class="modal-content" style="padding: 30px;">
             <span class="close" onclick="closeModal('loginModal')">&times;</span>
             <h2 id="auth-title" class="section-title" style="font-size: 2rem; margin-bottom: 20px; text-align: center;">LOG<span>IN</span></h2>
-            
             <div id="auth-form-inputs">
                 <input type="text" id="auth-name" placeholder="Full Name" style="display:none;">
                 <input type="email" id="auth-email" placeholder="Email Address">
                 <input type="password" id="auth-pass" placeholder="Password">
             </div>
-
             <div id="login-view-btns">
                 <button class="btn-auth-solid" onclick="handleAuth('login')">SIGN IN</button>
                 <button class="btn-auth-outline" onclick="toggleAuthMode('signup')">Create Account</button>
             </div>
-
             <div id="signup-view-btns" style="display:none;">
                 <button class="btn-auth-solid" onclick="handleAuth('signup')">CREATE ACCOUNT</button>
                 <button class="btn-auth-outline" onclick="toggleAuthMode('login')">Back to Sign In</button>
@@ -371,8 +347,32 @@
                     <option value="UPI">UPI (GPay / PhonePe / Paytm)</option>
                     <option value="CASH">Cash at Ground</option>
                 </select>
-                <button type="submit" class="btn-primary" style="width:100%; margin-top:20px;">BOOK PITCH</button>
+                <button type="submit" class="btn-primary" style="width:100%; margin-top:20px; background: var(--dark-green); color: white;">BOOK PITCH</button>
             </form>
+        </div>
+    </div>
+
+    <!-- Booking Success / Slip Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content" style="text-align: center;">
+            <span class="close" onclick="closeSuccessModal()">&times;</span>
+            <div style="font-size: 50px; margin-bottom: 10px;">✅</div>
+            <h2 class="section-title" style="font-size: 2rem;">BOOKING <span>PLACED</span></h2>
+            <p style="color: #4b5563; font-weight: 600; margin-bottom: 20px;">Your slot request is pending admin approval.</p>
+            
+            <div class="receipt-box">
+                <p><strong>Name:</strong> <span id="slip-name"></span></p>
+                <p><strong>Date:</strong> <span id="slip-date"></span></p>
+                <p><strong>Slot:</strong> <span id="slip-slot"></span></p>
+                <p><strong>Amount:</strong> ₹<span id="slip-price"></span></p>
+                <p><strong>Payment:</strong> <span id="slip-payment"></span></p>
+                <p><strong>Status:</strong> <span style="color: #d97706; font-weight: 800;">PENDING</span></p>
+            </div>
+
+            <button class="btn-whatsapp" onclick="sendWhatsAppConfirmation()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.01 2.014c-5.46 0-9.91 4.45-9.91 9.91 0 1.74.45 3.41 1.31 4.9L2 22l5.34-1.4c1.45.82 3.08 1.25 4.77 1.25 5.46 0 9.91-4.45 9.91-9.91 0-5.46-4.45-9.91-9.91-9.91zm0 18.23c-1.48 0-2.93-.39-4.2-1.14l-.3-.18-3.13.82.83-3.05-.2-.32c-.83-1.33-1.27-2.85-1.27-4.43 0-4.56 3.71-8.27 8.27-8.27 4.56 0 8.27 3.71 8.27 8.27 0 4.56-3.71 8.27-8.27 8.27zm4.53-6.17c-.25-.13-1.48-.73-1.71-.82-.23-.08-.39-.13-.56.13-.17.25-.64.82-.79.99-.14.17-.29.19-.54.06-1.12-.56-2.03-1.07-2.83-2.19-.21-.3-.02-.46.1-.58.12-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.32-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.32-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.02 2.6.13.17 1.77 2.7 4.29 3.79 1.15.5 1.84.67 2.51.84.7.18 1.34.15 1.84.09.56-.06 1.48-.6 1.69-1.19.21-.58.21-1.08.15-1.19-.06-.11-.23-.17-.48-.3z"/></svg>
+                Notify Admin via WhatsApp
+            </button>
         </div>
     </div>
 
@@ -391,7 +391,6 @@
             <div class="logo">⚡ AKS <br><span style="color:var(--primary-green);">TURF</span><br><span style="font-size:14px; font-weight:400; color:#a7f3d0;">Admin Panel</span></div>
             <hr style="border-color: rgba(255,255,255,0.1); margin-bottom: 10px;">
             <button class="admin-nav-btn active">📅 Daily Schedule</button>
-            <!-- Room for future admin tabs -->
             <button class="admin-nav-btn admin-close" onclick="closeAdminDashboard()">⬅ Exit Admin</button>
         </div>
         
@@ -409,6 +408,7 @@
                 </div>
             </div>
 
+            <!-- ADMIN APPROVAL SECTION -->
             <div id="admin-pending-area" style="display:none; background:#fef08a; padding:20px; border-radius:var(--curve); margin-bottom:30px; border: 2px solid #eab308; box-shadow: 0 4px 15px rgba(234, 179, 8, 0.2);">
                 <h3 style="color:#854d0e; margin-bottom:15px; font-size: 18px;">⚠️ Action Required: Pending Bookings</h3>
                 <div id="pending-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
@@ -452,6 +452,9 @@
         // Admin Notification Variables
         let adminPollingInterval = null;
         let lastPendingCount = 0;
+
+        // Current Booking Details for Slip
+        let currentBookingData = null;
 
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
@@ -525,14 +528,8 @@
             for(let i=0; i<5; i++) {
                 skelHtml += `
                 <div class="skel-card">
-                    <div>
-                        <div class="skeleton skel-time"></div>
-                        <div class="skeleton skel-price"></div>
-                    </div>
-                    <div style="text-align:right;">
-                        <div class="skeleton skel-pill"></div>
-                        <div class="skeleton skel-btn"></div>
-                    </div>
+                    <div><div class="skeleton skel-time"></div><div class="skeleton skel-price"></div></div>
+                    <div style="text-align:right;"><div class="skeleton skel-pill"></div><div class="skeleton skel-btn"></div></div>
                 </div>`;
             }
             return skelHtml;
@@ -542,18 +539,7 @@
             const date = document.getElementById('booking-date').value;
             const area = document.getElementById('slots-area');
             
-            area.innerHTML = `
-                <div class="slots-grid">
-                    <div class="slots-column">
-                        <div class="skeleton skel-category"></div>
-                        ${generateSkeletonCards()}
-                    </div>
-                    <div class="slots-column">
-                        <div class="skeleton skel-category"></div>
-                        ${generateSkeletonCards()}
-                    </div>
-                </div>
-            `;
+            area.innerHTML = `<div class="slots-grid"><div class="slots-column"><div class="skeleton skel-category"></div>${generateSkeletonCards()}</div><div class="slots-column"><div class="skeleton skel-category"></div>${generateSkeletonCards()}</div></div>`;
 
             try {
                 const res = await fetch('https://aks-turf-backend.vercel.app/api/db', {
@@ -595,7 +581,7 @@
 
                 if(booking) {
                     btnState = "disabled";
-                    cardClass = "slot-card greyed-out"; 
+                    cardClass = "slot-card greyed-out"; // Ensures user sees blocked/pending as greyed out
                     
                     if(booking.status === 'confirmed') {
                         statusClass = "status-booked"; statusText = "UNAVAILABLE"; btnText = "PITCH BOOKED";
@@ -628,14 +614,18 @@
             openModal('bookingModal');
         }
 
+        // UPDATED BOOKING FORM LOGIC
         document.getElementById('bookingForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const date = document.getElementById('booking-date').value;
-            const payload = {
-                action: "book", date: date, slot: selectedSlot, 
-                name: document.getElementById('b-name').value, email: currentUser, 
-                phone: document.getElementById('b-phone').value, payment: document.getElementById('b-payment').value
-            };
+            const name = document.getElementById('b-name').value;
+            const phone = document.getElementById('b-phone').value;
+            const payment = document.getElementById('b-payment').value;
+
+            const payload = { action: "book", date: date, slot: selectedSlot, name: name, email: currentUser, phone: phone, payment: payment };
+            
+            // Save for WhatsApp Slip
+            currentBookingData = { date: date, slot: selectedSlot, name: name, price: slotPrice, payment: payment };
 
             closeModal('bookingModal');
             showToast("Processing booking...", "success");
@@ -645,9 +635,36 @@
                     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
                 });
                 showToast("Booking request sent! Waiting for Admin approval.", "success");
+                
+                // Show Success Slip
+                document.getElementById('slip-name').innerText = name;
+                document.getElementById('slip-date').innerText = date;
+                document.getElementById('slip-slot').innerText = selectedSlot;
+                document.getElementById('slip-price').innerText = slotPrice;
+                document.getElementById('slip-payment').innerText = payment;
+                openModal('successModal');
+
                 fetchSlots(); 
+
+                // Automatic UPI Redirection
+                if(payment === 'UPI') {
+                    const upiLink = `upi://pay?pa=aaryesh.honrao@fam&pn=AKS%20Turf&am=${slotPrice}&cu=INR&tn=Turf%20Booking%20${date}%20${selectedSlot}`;
+                    setTimeout(() => { window.location.href = upiLink; }, 1000); // Small delay to let modal open
+                }
+
             } catch (error) { showToast("Booking failed.", "error"); }
         });
+
+        function closeSuccessModal() {
+            closeModal('successModal');
+            currentBookingData = null;
+        }
+
+        function sendWhatsAppConfirmation() {
+            if(!currentBookingData) return;
+            const text = `Hello AKS Turf!%0AI just requested a slot booking.%0A%0A*Name:* ${currentBookingData.name}%0A*Date:* ${currentBookingData.date}%0A*Slot:* ${currentBookingData.slot}%0A*Amount:* ₹${currentBookingData.price}%0A*Payment Mode:* ${currentBookingData.payment}%0A%0APlease confirm my booking.`;
+            window.open(`https://wa.me/919175023438?text=${text}`, '_blank');
+        }
 
         /* ================= ADMIN LOGIC ================= */
         function verifyAdmin() {
@@ -660,17 +677,13 @@
 
         function openAdminDashboard() {
             document.getElementById('adminDashboardFullscreen').classList.add('active');
-            
             if(!document.getElementById('admin-date-picker').value) {
                 document.getElementById('admin-date-picker').value = document.getElementById('booking-date').value || new Date().toLocaleDateString('en-CA');
             }
-            
             loadAdminData();
             
             lastPendingCount = 0; 
-            adminPollingInterval = setInterval(() => {
-                loadAdminData(true); 
-            }, 10000); 
+            adminPollingInterval = setInterval(() => { loadAdminData(true); }, 10000); 
         }
 
         function closeAdminDashboard() {
@@ -694,9 +707,7 @@
                 const pendingArea = document.getElementById('admin-pending-area');
                 const pendingList = document.getElementById('pending-list');
                 
-                if(isBackground && pendingBookings.length > lastPendingCount) {
-                    showToast("🔔 New slot booking received!", "success");
-                }
+                if(isBackground && pendingBookings.length > lastPendingCount) { showToast("🔔 New slot booking received!", "success"); }
                 lastPendingCount = pendingBookings.length;
 
                 if(pendingBookings.length > 0) {
