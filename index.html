@@ -65,22 +65,42 @@
         .toast.error { border-left-color: #ef4444; }
         .toast.event { border-left-color: #a855f7; background: #faf5ff; }
 
-        /* --- NEW: Hero Section Animated Gradient Mesh --- */
-        @keyframes gradientMesh {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+        /* --- NEW: Hero Section with Looping Video --- */
         .hero { 
+            position: relative;
             height: 100vh; 
-            background: linear-gradient(-45deg, #022c22, #064e3b, #047857, #10b981, #34d399);
-            background-size: 400% 400%;
-            animation: gradientMesh 12s ease infinite;
             display: flex; align-items: center; justify-content: center; text-align: center;
             border-bottom-left-radius: 40px; border-bottom-right-radius: 40px;
             padding: 0 5%;
+            overflow: hidden;
         }
-        .hero-content { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            object-fit: cover;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Gradient overlay to ensure perfect text readability and match brand colors */
+            background: linear-gradient(rgba(6, 78, 59, 0.8), rgba(2, 44, 34, 0.9)); 
+            z-index: 1;
+        }
+        .hero-content { 
+            position: relative; 
+            z-index: 2; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+        }
         .hero-content h1 { font-size: 5rem; line-height: 1; margin: 20px 0; text-transform: uppercase; color: var(--text-light); font-weight: 800;}
         .hero-content h1 span { color: var(--primary-green); font-style: italic; }
         
@@ -98,7 +118,7 @@
 
         .slot-card { background: white; border-radius: var(--curve); padding: 20px; width: 100%; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; border: 1px solid #e5e7eb; transition: 0.3s;}
         
-        /* --- NEW: Greyed out style for unavailable slots --- */
+        /* Greyed out style for unavailable slots */
         .slot-card.greyed-out { background-color: #f3f4f6; opacity: 0.6; border-color: #d1d5db; pointer-events: none; }
         .slot-card.greyed-out .btn-book { background: #d1d5db; color: #6b7280; }
 
@@ -125,7 +145,7 @@
         .btn-auth-outline { background: white; color: #4b5563; border: 1px solid #d1d5db; padding: 15px; border-radius: 12px; width: 100%; font-size: 18px; font-weight: 800; display: flex; justify-content: center; align-items: center; gap: 10px; cursor: pointer; margin-top: 15px; transition: 0.3s; }
         .btn-auth-outline:hover { background: #f3f4f6; border-color: #9ca3af; }
 
-        /* --- NEW: Fullscreen Admin Layout Styles --- */
+        /* Fullscreen Admin Layout Styles */
         .admin-fullscreen { 
             display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
             z-index: 3000; background: var(--bg-light); flex-direction: row; overflow: hidden;
@@ -241,10 +261,16 @@
         <a href="#" onclick="handleMobileUser()"><span>👤</span>Account</a>
     </div>
 
-    <!-- Updated Hero Section -->
+    <!-- --- UPDATED: Hero Section with Looping Video & Dark Overlay --- -->
     <header id="home" class="hero">
+        <video class="hero-video" autoplay loop muted playsinline>
+            <!-- A high-quality abstract stadium/lights placeholder video from Mixkit -->
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-stadium-with-bright-lights-at-night-4233-large.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-overlay"></div>
         <div class="hero-content">
-            <h1>PREMIUM <span style="color:var(--dark-green)">CRICKET</span><br>EXPERIENCE</h1>
+            <h1>PREMIUM <span style="color:var(--primary-green)">CRICKET</span><br>EXPERIENCE</h1>
             <p style="color: white; margin-bottom: 20px; font-size: 18px; max-width: 600px; font-weight: 600;">Perfectly maintained pitches, tournament-grade floodlights, and towering boundary nets. Book your net session now.</p>
             <button class="btn-primary" onclick="window.location.href='#booking-section'">BOOK A SLOT →</button>
         </div>
@@ -359,7 +385,7 @@
         </div>
     </div>
 
-    <!-- --- NEW: Fullscreen Admin Layout --- -->
+    <!-- Fullscreen Admin Layout -->
     <div id="adminDashboardFullscreen" class="admin-fullscreen">
         <div class="admin-sidebar">
             <div class="logo">⚡ AKS <br><span style="color:var(--primary-green);">TURF</span><br><span style="font-size:14px; font-weight:400; color:#a7f3d0;">Admin Panel</span></div>
@@ -565,11 +591,11 @@
             slotsArray.forEach(slot => {
                 const booking = dbBookings.find(b => b.slot === slot);
                 let btnState = "", btnText = "BOOK PITCH", statusClass = "status-available", statusText = "AVAILABLE";
-                let cardClass = "slot-card"; // Base class
+                let cardClass = "slot-card"; 
 
                 if(booking) {
                     btnState = "disabled";
-                    cardClass = "slot-card greyed-out"; // Applies visual grey out
+                    cardClass = "slot-card greyed-out"; 
                     
                     if(booking.status === 'confirmed') {
                         statusClass = "status-booked"; statusText = "UNAVAILABLE"; btnText = "PITCH BOOKED";
@@ -635,14 +661,12 @@
         function openAdminDashboard() {
             document.getElementById('adminDashboardFullscreen').classList.add('active');
             
-            // Sync admin date picker with front-end picker if empty
             if(!document.getElementById('admin-date-picker').value) {
                 document.getElementById('admin-date-picker').value = document.getElementById('booking-date').value || new Date().toLocaleDateString('en-CA');
             }
             
             loadAdminData();
             
-            // Start polling for new bookings
             lastPendingCount = 0; 
             adminPollingInterval = setInterval(() => {
                 loadAdminData(true); 
@@ -652,7 +676,7 @@
         function closeAdminDashboard() {
             document.getElementById('adminDashboardFullscreen').classList.remove('active');
             if(adminPollingInterval) clearInterval(adminPollingInterval);
-            fetchSlots(); // Refresh frontend on exit
+            fetchSlots(); 
         }
 
         async function loadAdminData(isBackground = false) {
@@ -670,7 +694,6 @@
                 const pendingArea = document.getElementById('admin-pending-area');
                 const pendingList = document.getElementById('pending-list');
                 
-                // --- NEW: Real-time Notification Logic ---
                 if(isBackground && pendingBookings.length > lastPendingCount) {
                     showToast("🔔 New slot booking received!", "success");
                 }
