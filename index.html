@@ -151,6 +151,26 @@
             .floating-btns { bottom: 100px; } 
             body { padding-bottom: 100px; } 
         }
+
+        /* --- NEW: Skeleton Loading Animation Styles --- */
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        .skeleton {
+            background: #e5e7eb;
+            background-image: linear-gradient(90deg, #e5e7eb 0px, #f3f4f6 40px, #e5e7eb 80px);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite linear;
+            border-radius: 5px;
+        }
+        .skel-card { background: white; border-radius: var(--curve); padding: 20px; width: 100%; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; border: 1px solid #e5e7eb; }
+        .skel-category { height: 28px; width: 220px; margin: 0 auto 15px auto; border-radius: 14px; }
+        .skel-time { height: 20px; width: 150px; margin-bottom: 10px; }
+        .skel-price { height: 16px; width: 60px; }
+        .skel-pill { height: 24px; width: 90px; border-radius: var(--curve); margin-bottom: 12px; margin-left: auto; }
+        .skel-btn { height: 38px; width: 110px; border-radius: var(--curve); }
+        /* ---------------------------------------------- */
     </style>
 </head>
 <body>
@@ -201,7 +221,7 @@
         
         <div class="booking-layout">
             <div class="slots-area" id="slots-area">
-                <div style="width:100%; text-align:center; padding: 20px; color: var(--dark-green); font-weight:800;">Loading Database...</div>
+                <!-- Skeleton loader will be injected here via JS -->
             </div>
             <div class="panel-area">
                 <div class="panel-card">
@@ -428,11 +448,43 @@
         }
         function logout() { localStorage.removeItem('turf_user'); checkLoginState(); showToast("Logged out!"); }
 
+        // --- NEW: Helper Function to Generate Shimmer Skeleton Cards ---
+        function generateSkeletonCards() {
+            let skelHtml = '';
+            for(let i=0; i<5; i++) {
+                skelHtml += `
+                <div class="skel-card">
+                    <div>
+                        <div class="skeleton skel-time"></div>
+                        <div class="skeleton skel-price"></div>
+                    </div>
+                    <div style="text-align:right;">
+                        <div class="skeleton skel-pill"></div>
+                        <div class="skeleton skel-btn"></div>
+                    </div>
+                </div>`;
+            }
+            return skelHtml;
+        }
+
         // FETCHING SLOTS FOR USERS
         async function fetchSlots() {
             const date = document.getElementById('booking-date').value;
             const area = document.getElementById('slots-area');
-            area.innerHTML = "<div style='width:100%; text-align:center; padding: 20px; font-weight:800;'>Fetching Available Pitches...</div>";
+            
+            // --- NEW: Inject Skeleton Layout while Loading ---
+            area.innerHTML = `
+                <div class="slots-grid">
+                    <div class="slots-column">
+                        <div class="skeleton skel-category"></div>
+                        ${generateSkeletonCards()}
+                    </div>
+                    <div class="slots-column">
+                        <div class="skeleton skel-category"></div>
+                        ${generateSkeletonCards()}
+                    </div>
+                </div>
+            `;
 
             try {
                 const res = await fetch('https://aks-turf-backend.vercel.app/api/db', {
@@ -462,7 +514,7 @@
                 area.innerHTML = `<div class="slots-grid"><div class="slots-column">${morningHTML}</div><div class="slots-column">${nightHTML}</div></div>`;
 
             } catch (e) {
-                area.innerHTML = "<p style='color:red; font-weight:700;'>Failed to connect to server.</p>";
+                area.innerHTML = "<p style='color:red; font-weight:700; text-align:center; padding:20px;'>Failed to connect to server.</p>";
             }
         }
 
