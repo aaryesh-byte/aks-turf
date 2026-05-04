@@ -21,7 +21,7 @@
 
         html { scroll-behavior: smooth; scroll-padding-top: 120px; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, button, input, select { font-family: var(--font-main); }
+        body, button, input, select, textarea { font-family: var(--font-main); }
         body { background-color: var(--bg-light); color: var(--text-dark); padding-bottom: 20px;}
 
         /* Global Loading Overlay */
@@ -121,8 +121,8 @@
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(6, 78, 59, 0.8); backdrop-filter: blur(5px); overflow-y: auto;}
         .modal-content { background: white; margin: 5% auto; padding: 40px; width: 90%; max-width: 450px; border-radius: var(--curve); position: relative; border: 4px solid var(--primary-green);}
         .close { position: absolute; right: 20px; top: 15px; font-size: 28px; cursor: pointer; color: var(--dark-green); font-weight: 800;}
-        input, select { width: 100%; padding: 15px; margin: 10px 0; border: 2px solid #e5e7eb; border-radius: 15px; outline: none; font-size: 16px; font-weight: 600;}
-        input:focus, select:focus { border-color: var(--primary-green); }
+        input, select, textarea { width: 100%; padding: 15px; margin: 10px 0; border: 2px solid #e5e7eb; border-radius: 15px; outline: none; font-size: 16px; font-weight: 600;}
+        input:focus, select:focus, textarea:focus { border-color: var(--primary-green); }
 
         .btn-auth-solid { background: var(--primary-green); color: var(--dark-green); border: none; padding: 15px; border-radius: 12px; width: 100%; font-size: 18px; font-weight: 800; display: flex; justify-content: center; align-items: center; gap: 10px; cursor: pointer; box-shadow: 0 4px 15px rgba(52, 211, 153, 0.4); transition: 0.3s; margin-top: 10px;}
         .btn-auth-solid:hover { background: #10b981; transform: translateY(-2px); }
@@ -179,7 +179,6 @@
             
             .hamburger, .menu-links, .nav-center { display: none !important; }
             
-            /* Enhanced Bottom Nav for Mobile */
             .bottom-nav { 
                 display: flex; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
                 width: 95%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); 
@@ -192,7 +191,6 @@
             }
             .bottom-nav a span:first-child { font-size: 20px; }
 
-            /* Center Floating Book Button */
             .nav-book-btn { position: relative; top: -15px; }
             .nav-book-btn .book-circle {
                 background: var(--primary-green); width: 60px; height: 60px; border-radius: 50%;
@@ -230,7 +228,6 @@
 
     <div id="toast-container" class="toast-container"></div>
     
-    <!-- Admin Action Loading Overlay -->
     <div id="loadingOverlay" class="loading-overlay">
         <div class="spinner"></div>
         <h3 id="loadingText" style="margin-top:20px; font-weight:800; font-size:20px; letter-spacing: 1px;">Processing...</h3>
@@ -251,7 +248,6 @@
         </div>
     </nav>
 
-    <!-- Updated Mobile Bottom Nav -->
     <div class="bottom-nav">
         <a href="#home"><span>🏠</span><span>Home</span></a>
         <a href="#gallery"><span>📸</span><span>Gallery</span></a>
@@ -265,11 +261,9 @@
         <a href="#" onclick="handleMobileUser()"><span>👤</span><span>Account</span></a>
     </div>
 
-    <!-- Hero Section (Video Loop) -->
     <header id="home" class="hero">
         <video class="hero-video" autoplay loop muted playsinline>
             <source src="https://assets.mixkit.co/videos/preview/mixkit-stadium-with-bright-lights-at-night-4233-large.mp4" type="video/mp4">
-            Your browser does not support the video tag.
         </video>
         <div class="hero-overlay"></div>
         <div class="hero-content">
@@ -302,6 +296,13 @@
                     <button class="btn-refresh" onclick="fetchSlots()" style="width:100%; padding:15px; margin-top:15px; background:#f3f4f6; color:var(--dark-green); border:none; border-radius:var(--curve); cursor:pointer; font-weight:800;">🔄 REFRESH SLOTS</button>
                 </div>
             </div>
+        </div>
+
+        <!-- NEW: Review Button Placed Right Below Slot Booking -->
+        <div style="text-align: center; margin-top: 40px;">
+            <button class="btn-primary" onclick="openModal('reviewModal')" style="background: white; border: 2px solid var(--primary-green); color: var(--dark-green); display: inline-flex; align-items: center; gap: 8px;">
+                ⭐ WRITE A REVIEW
+            </button>
         </div>
     </section>
 
@@ -363,7 +364,6 @@
             <p id="selected-slot-text" style="color: var(--dark-green); font-weight: 800; background: var(--bg-offwhite); padding: 10px; border-radius: 10px; margin-bottom: 15px; text-align: center;"></p>
             <form id="bookingForm">
                 <input type="text" id="b-name" placeholder="Captain's Full Name" required>
-                <!-- Only accept 10 digits filter dynamically -->
                 <input type="text" id="b-phone" placeholder="Phone Number (10 Digits)" pattern="\d{10}" maxlength="10" required oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);">
                 <select id="b-payment" required>
                     <option value="" disabled selected>Select Payment Method</option>
@@ -375,7 +375,27 @@
         </div>
     </div>
 
-    <!-- Booking Success / Slip Modal -->
+    <!-- NEW: Review Modal -->
+    <div id="reviewModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('reviewModal')">&times;</span>
+            <h2 class="section-title" style="font-size: 2rem;">SUBMIT <span>REVIEW</span></h2>
+            <form id="reviewForm">
+                <input type="text" id="r-name" placeholder="Your Name" required>
+                <select id="r-rating" required>
+                    <option value="" disabled selected>Rate Your Experience (1 to 5)</option>
+                    <option value="5">⭐⭐⭐⭐⭐ (5 - Excellent)</option>
+                    <option value="4">⭐⭐⭐⭐ (4 - Very Good)</option>
+                    <option value="3">⭐⭐⭐ (3 - Average)</option>
+                    <option value="2">⭐⭐ (2 - Below Average)</option>
+                    <option value="1">⭐ (1 - Poor)</option>
+                </select>
+                <textarea id="r-text" placeholder="Tell us what you liked..." rows="4" required></textarea>
+                <button id="submitReviewBtn" type="submit" class="btn-primary" style="width:100%; margin-top:10px;">SUBMIT REVIEW</button>
+            </form>
+        </div>
+    </div>
+
     <div id="successModal" class="modal">
         <div class="modal-content" style="text-align: center;">
             <span class="close" onclick="closeSuccessModal()">&times;</span>
@@ -392,7 +412,6 @@
                 <p><strong>Status:</strong> <span style="color: #d97706; font-weight: 800;">PENDING</span></p>
             </div>
 
-            <!-- UPI Payment Section (Visible only if UPI is selected) -->
             <div id="upi-payment-section" style="display:none; margin-bottom: 15px; background: #faf5ff; padding: 15px; border-radius: var(--curve); border: 2px solid #a855f7;">
                 <h4 style="color:#7e22ce; margin-bottom:10px;">Step 1: Complete Payment</h4>
                 <a id="upi-link-btn" href="#" class="btn-primary" style="display:block; text-decoration:none; text-align:center; background:#a855f7; color:white;">📱 PAY VIA UPI APPS</a>
@@ -420,47 +439,66 @@
         <div class="admin-sidebar">
             <div class="logo">⚡ AKS <br><span style="color:var(--primary-green);">TURF</span><br><span style="font-size:14px; font-weight:400; color:#a7f3d0;">Admin Panel</span></div>
             <hr style="border-color: rgba(255,255,255,0.1); margin-bottom: 10px;">
-            <button class="admin-nav-btn active">📅 Daily Schedule</button>
+            <!-- NEW: Switchable Sidebar Tabs -->
+            <button class="admin-nav-btn active" id="tab-bookings" onclick="switchAdminTab('bookings')">📅 Daily Schedule</button>
+            <button class="admin-nav-btn" id="tab-reviews" onclick="switchAdminTab('reviews')">⭐ User Reviews</button>
+            
             <button class="admin-nav-btn admin-close" onclick="closeAdminDashboard()">⬅ Exit Admin</button>
         </div>
         
         <div class="admin-main">
-            <h2 class="section-title" style="font-size: 2.5rem;">TURF <span>DASHBOARD</span></h2>
-            
-            <div style="display:flex; justify-content:space-between; align-items:center; background:white; padding:20px; border-radius:var(--curve); margin-bottom: 30px; border: 1px solid #e5e7eb; flex-wrap: wrap; gap:15px; box-shadow: 0 4px 10px rgba(0,0,0,0.02);">
-                <div class="date-picker-box" style="margin: 0; min-width: 250px;">
-                    <label style="font-size: 12px; margin-bottom: 5px; display: block; color: #a7f3d0; font-weight: 800;">MANAGE DATE:</label>
-                    <input type="date" id="admin-date-picker" onchange="loadAdminData()">
-                </div>
-                <div>
-                    <button class="btn-primary" style="background:#a855f7; padding: 15px 20px; font-size:14px; margin-right: 10px;" onclick="adminBlockEntireDay()">🚫 Block Entire Day</button>
-                    <button class="btn-primary" style="padding: 15px 20px; font-size:14px;" onclick="loadAdminData()">🔄 Refresh</button>
-                </div>
-            </div>
-
-            <!-- ADMIN APPROVAL SECTION -->
-            <div id="admin-pending-area" style="display:none; background:#fef08a; padding:20px; border-radius:var(--curve); margin-bottom:30px; border: 2px solid #eab308; box-shadow: 0 4px 15px rgba(234, 179, 8, 0.2);">
-                <h3 style="color:#854d0e; margin-bottom:15px; font-size: 18px;">⚠️ Action Required: Pending Bookings</h3>
-                <div id="pending-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
-            </div>
-
-            <div style="display: flex; gap: 30px; flex-wrap: wrap;">
-                <div style="flex: 1; min-width: 350px;">
-                    <h3 style="color:var(--dark-green); margin-bottom:15px;">Slot Availability Overview</h3>
-                    <div style="overflow-x:auto;">
-                        <table class="admin-table" id="overview-table">
-                            <thead><tr><th>Time Slot</th><th>Status</th><th>Admin Action</th></tr></thead>
-                            <tbody id="overview-body"></tbody>
-                        </table>
+            <!-- TAB 1: Bookings View -->
+            <div id="admin-bookings-view">
+                <h2 class="section-title" style="font-size: 2.5rem;">TURF <span>DASHBOARD</span></h2>
+                
+                <div style="display:flex; justify-content:space-between; align-items:center; background:white; padding:20px; border-radius:var(--curve); margin-bottom: 30px; border: 1px solid #e5e7eb; flex-wrap: wrap; gap:15px; box-shadow: 0 4px 10px rgba(0,0,0,0.02);">
+                    <div class="date-picker-box" style="margin: 0; min-width: 250px;">
+                        <label style="font-size: 12px; margin-bottom: 5px; display: block; color: #a7f3d0; font-weight: 800;">MANAGE DATE:</label>
+                        <input type="date" id="admin-date-picker" onchange="loadAdminData()">
+                    </div>
+                    <div>
+                        <button class="btn-primary" style="background:#a855f7; padding: 15px 20px; font-size:14px; margin-right: 10px;" onclick="adminBlockEntireDay()">🚫 Block Entire Day</button>
+                        <button class="btn-primary" style="padding: 15px 20px; font-size:14px;" onclick="loadAdminData()">🔄 Refresh</button>
                     </div>
                 </div>
 
-                <div style="flex: 1; min-width: 350px;">
-                    <h3 style="color:var(--dark-green); margin-bottom:15px;">Booked Slot Details</h3>
+                <div id="admin-pending-area" style="display:none; background:#fef08a; padding:20px; border-radius:var(--curve); margin-bottom:30px; border: 2px solid #eab308; box-shadow: 0 4px 15px rgba(234, 179, 8, 0.2);">
+                    <h3 style="color:#854d0e; margin-bottom:15px; font-size: 18px;">⚠️ Action Required: Pending Bookings</h3>
+                    <div id="pending-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
+                </div>
+
+                <div style="display: flex; gap: 30px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 350px;">
+                        <h3 style="color:var(--dark-green); margin-bottom:15px;">Slot Availability Overview</h3>
+                        <div style="overflow-x:auto;">
+                            <table class="admin-table" id="overview-table">
+                                <thead><tr><th>Time Slot</th><th>Status</th><th>Admin Action</th></tr></thead>
+                                <tbody id="overview-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div style="flex: 1; min-width: 350px;">
+                        <h3 style="color:var(--dark-green); margin-bottom:15px;">Booked Slot Details</h3>
+                        <div style="overflow-x:auto;">
+                            <table class="admin-table">
+                                <thead><tr><th>Name</th><th>Phone</th><th>Slot</th><th>Payment</th><th>Status</th></tr></thead>
+                                <tbody id="details-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEW: TAB 2: Reviews View -->
+            <div id="admin-reviews-view" style="display:none;">
+                <h2 class="section-title" style="font-size: 2.5rem;">USER <span>REVIEWS</span></h2>
+                <div style="background:white; padding:20px; border-radius:var(--curve); border: 1px solid #e5e7eb; box-shadow: 0 4px 10px rgba(0,0,0,0.02);">
+                    <button class="btn-primary" style="padding: 10px 20px; font-size:14px; margin-bottom: 15px;" onclick="loadAdminReviews()">🔄 Refresh Reviews</button>
                     <div style="overflow-x:auto;">
                         <table class="admin-table">
-                            <thead><tr><th>Name</th><th>Phone</th><th>Slot</th><th>Payment</th><th>Status</th></tr></thead>
-                            <tbody id="details-body"></tbody>
+                            <thead><tr><th>Date</th><th>Name</th><th>Rating</th><th>Review</th></tr></thead>
+                            <tbody id="admin-reviews-body"></tbody>
                         </table>
                     </div>
                 </div>
@@ -482,7 +520,6 @@
         let lastPendingCount = 0;
         let currentBookingData = null;
 
-        // Overlay Loading Control
         function showLoading(text) {
             document.getElementById('loadingText').innerText = text;
             document.getElementById('loadingOverlay').style.display = 'flex';
@@ -502,15 +539,12 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            // ALWAYS LOG OUT THE USER WHEN PAGE IS OPENED OR REFRESHED
             localStorage.removeItem('turf_user');
-
             const dateInput = document.getElementById('booking-date');
             const today = new Date();
             const nextWeek = new Date();
             nextWeek.setDate(today.getDate() + 6);
             
-            // Format to match exact standard expected by string comparators (YYYY-MM-DD)
             const formatDt = (dt) => {
                 let m = ('0' + (dt.getMonth() + 1)).slice(-2);
                 let d = ('0' + dt.getDate()).slice(-2);
@@ -619,7 +653,6 @@
         function buildCards(slotsArray, dbBookings, price) {
             let html = "";
             slotsArray.forEach(slot => {
-                // VERY IMPORTANT: Trim both strings to guarantee exact match
                 const booking = dbBookings.find(b => String(b.slot).trim() === String(slot).trim());
                 let btnState = "", btnText = "BOOK PITCH", statusClass = "status-available", statusText = "AVAILABLE";
                 let cardClass = "slot-card"; 
@@ -669,7 +702,6 @@
             const payment = document.getElementById('b-payment').value;
             const submitBtn = document.getElementById('submitBookingBtn');
 
-            // Force the form to stay open and show processing state
             submitBtn.disabled = true;
             submitBtn.innerText = "PROCESSING BOOKING...";
 
@@ -677,12 +709,10 @@
             currentBookingData = { date: date, slot: selectedSlot, name: name, price: slotPrice, payment: payment };
 
             try {
-                // Wait for the backend response BEFORE closing the modal
                 await fetch('https://aks-turf-backend.vercel.app/api/db', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
                 });
                 
-                // Now safely close and show success
                 closeModal('bookingModal');
                 showToast("Booking request sent! Waiting for Admin approval.", "success");
                 
@@ -692,7 +722,6 @@
                 document.getElementById('slip-price').innerText = slotPrice;
                 document.getElementById('slip-payment').innerText = payment;
 
-                // Configure the UPI payment section in success modal
                 if(payment === 'UPI') {
                     document.getElementById('upi-payment-section').style.display = 'block';
                     const upiLink = `upi://pay?pa=aaryesh.honrao@fam&pn=AKS%20Turf&am=${slotPrice}&cu=INR&tn=Turf%20Booking%20${date}%20${selectedSlot}`;
@@ -724,6 +753,34 @@
             window.open(`https://wa.me/919175023438?text=${text}`, '_blank');
         }
 
+        /* ================= REVIEW SUBMISSION LOGIC ================= */
+        document.getElementById('reviewForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('r-name').value;
+            const rating = document.getElementById('r-rating').value;
+            const text = document.getElementById('r-text').value;
+            const btn = document.getElementById('submitReviewBtn');
+            
+            btn.disabled = true;
+            btn.innerText = "SUBMITTING...";
+
+            try {
+                await fetch('https://aks-turf-backend.vercel.app/api/db', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: "submitReview", name: name, rating: rating, reviewText: text })
+                });
+                showToast("Thank you! Review submitted successfully.", "success");
+                closeModal('reviewModal');
+                document.getElementById('reviewForm').reset();
+            } catch (error) {
+                showToast("Failed to submit review.", "error");
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "SUBMIT REVIEW";
+            }
+        });
+
+
         /* ================= ADMIN LOGIC ================= */
         function verifyAdmin() {
             if(document.getElementById('admin-pass').value === '12345') {
@@ -735,6 +792,7 @@
 
         function openAdminDashboard() {
             document.getElementById('adminDashboardFullscreen').classList.add('active');
+            switchAdminTab('bookings'); // Default open bookings view
             if(!document.getElementById('admin-date-picker').value) {
                 document.getElementById('admin-date-picker').value = document.getElementById('booking-date').value || new Date().toLocaleDateString('en-CA');
             }
@@ -747,6 +805,23 @@
             document.getElementById('adminDashboardFullscreen').classList.remove('active');
             if(adminPollingInterval) clearInterval(adminPollingInterval);
             fetchSlots(); 
+        }
+
+        /* Switch Between Admin Panel Tabs */
+        function switchAdminTab(tab) {
+            document.getElementById('tab-bookings').classList.remove('active');
+            document.getElementById('tab-reviews').classList.remove('active');
+            document.getElementById('admin-bookings-view').style.display = 'none';
+            document.getElementById('admin-reviews-view').style.display = 'none';
+
+            document.getElementById('tab-' + tab).classList.add('active');
+            document.getElementById('admin-' + tab + '-view').style.display = 'block';
+
+            if (tab === 'reviews') {
+                loadAdminReviews();
+            } else {
+                loadAdminData();
+            }
         }
 
         async function loadAdminData(isBackground = false) {
@@ -808,6 +883,40 @@
                 `).join('') : `<tr><td colspan="5" style="text-align:center; padding: 20px; color: #6b7280;">No active user bookings for this date.</td></tr>`;
 
             } catch(e) { if(!isBackground) showToast("Admin fetch failed.", "error"); }
+        }
+
+        async function loadAdminReviews() {
+            const tbody = document.getElementById('admin-reviews-body');
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 20px;">Loading reviews...</td></tr>';
+            
+            try {
+                const res = await fetch('https://aks-turf-backend.vercel.app/api/db', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: "getReviews" })
+                });
+                const response = await res.json();
+                const reviews = response.data || [];
+                
+                if (reviews.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 20px; color: #6b7280;">No reviews found yet.</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = reviews.map(r => {
+                    // Create visual stars out of the rating number
+                    const ratingStr = '⭐'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+                    return `
+                        <tr>
+                            <td style="white-space: nowrap;">${new Date(r.timestamp).toLocaleDateString()}</td>
+                            <td style="font-weight: bold; color: var(--dark-green);">${r.name}</td>
+                            <td style="color: #facc15; font-size: 16px; letter-spacing: 2px;">${ratingStr}</td>
+                            <td style="color: #4b5563;">${r.reviewText}</td>
+                        </tr>
+                    `;
+                }).join('');
+            } catch (e) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 20px; color: red;">Failed to load reviews.</td></tr>';
+            }
         }
 
         async function updateStatus(date, slot, newStatus) {
