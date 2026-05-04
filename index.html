@@ -24,6 +24,19 @@
         body, button, input, select { font-family: var(--font-main); }
         body { background-color: var(--bg-light); color: var(--text-dark); padding-bottom: 20px;}
 
+        /* Global Loading Overlay */
+        .loading-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(6, 78, 59, 0.85); z-index: 9999; display: none;
+            justify-content: center; align-items: center; flex-direction: column; color: white;
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+        }
+        .spinner {
+            border: 5px solid rgba(255,255,255,0.2); border-top: 5px solid var(--primary-green);
+            border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
         /* Floating Navigation */
         nav { 
             display: flex; justify-content: space-between; align-items: center; 
@@ -76,6 +89,7 @@
         .hero-content h1 span { color: var(--primary-green); font-style: italic; }
         .btn-primary { padding: 15px 30px; border: none; border-radius: var(--curve); font-weight: 800; cursor: pointer; background: var(--primary-green); color: var(--dark-green); transition: 0.3s; text-transform: uppercase; font-size: 16px; box-shadow: 0 10px 20px rgba(0,0,0,0.2);}
         .btn-primary:hover { background: white; transform: scale(1.05);}
+        .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; transform: none; background: #9ca3af; }
         .btn-whatsapp { background: #25D366; color: white; padding: 15px; border-radius: var(--curve); width: 100%; font-weight: 800; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; font-size: 16px; margin-top: 15px; transition: 0.3s;}
         .btn-whatsapp:hover { background: #16a34a; transform: translateY(-2px); }
 
@@ -157,31 +171,42 @@
         @media(max-width: 768px) {
             nav { background: transparent; box-shadow: none; border: none; top: 10px; justify-content: center; width: 100%; backdrop-filter: none; -webkit-backdrop-filter: none; }
             
-            /* ADDED: Background & styling for Logo to stand out on mobile */
             .logo { 
-                text-align: center; 
-                font-size: 28px; 
-                text-shadow: none;
-                background: rgba(255, 255, 255, 0.9);
-                backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
-                padding: 10px 25px;
-                border-radius: 30px;
-                box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-                border: 1px solid rgba(255, 255, 255, 0.6);
+                text-align: center; font-size: 28px; text-shadow: none;
+                background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+                padding: 10px 25px; border-radius: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); border: 1px solid rgba(255, 255, 255, 0.6);
             }
             
             .hamburger, .menu-links, .nav-center { display: none !important; }
-            .bottom-nav { display: flex; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); padding: 15px 20px; border-radius: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); justify-content: space-around; align-items: center; z-index: 1000; border: 1px solid rgba(255,255,255,0.5); }
-            .bottom-nav a { font-size: 22px; text-decoration: none; transition: 0.3s; color: var(--dark-green); display: flex; flex-direction: column; align-items: center; font-size: 12px; font-weight: 800; gap: 5px;}
             
-            /* MODIFIED: Make Panel Area (Date Picker) show first on mobile */
+            /* Enhanced Bottom Nav for Mobile */
+            .bottom-nav { 
+                display: flex; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
+                width: 95%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); 
+                padding: 10px 15px; border-radius: 50px; justify-content: space-between; align-items: flex-end; 
+                z-index: 1000; border: 1px solid rgba(255,255,255,0.5); box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+            }
+            .bottom-nav a { 
+                font-size: 22px; text-decoration: none; transition: 0.3s; color: var(--dark-green); 
+                display: flex; flex-direction: column; align-items: center; font-size: 11px; font-weight: 800; gap: 5px; flex: 1;
+            }
+            .bottom-nav a span:first-child { font-size: 20px; }
+
+            /* Center Floating Book Button */
+            .nav-book-btn { position: relative; top: -15px; }
+            .nav-book-btn .book-circle {
+                background: var(--primary-green); width: 60px; height: 60px; border-radius: 50%;
+                display: flex; justify-content: center; align-items: center; font-size: 24px;
+                box-shadow: 0 5px 20px rgba(52, 211, 153, 0.6); border: 4px solid white; margin-bottom: 5px;
+                color: var(--dark-green);
+            }
+
             .booking-layout { flex-direction: column-reverse; gap: 20px; }
             .slots-grid { flex-direction: column; gap: 20px; }
             
             .about-layout { flex-direction: column; }
             .hero-content h1 { font-size: 3.5rem; }
-            .floating-btns { bottom: 100px; } body { padding-bottom: 100px; } 
+            .floating-btns { bottom: 115px; right: 20px;} body { padding-bottom: 120px; } 
             .admin-fullscreen { flex-direction: column; }
             .admin-sidebar { width: 100%; padding: 20px; height: auto; border-radius: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1); z-index: 10; gap: 10px;}
             .admin-main { padding: 20px; }
@@ -204,6 +229,12 @@
 <body>
 
     <div id="toast-container" class="toast-container"></div>
+    
+    <!-- Admin Action Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <h3 id="loadingText" style="margin-top:20px; font-weight:800; font-size:20px; letter-spacing: 1px;">Processing...</h3>
+    </div>
 
     <nav>
         <a href="#home" class="logo">⚡ AKS <span>TURF</span></a>
@@ -220,11 +251,18 @@
         </div>
     </nav>
 
+    <!-- Updated Mobile Bottom Nav -->
     <div class="bottom-nav">
-        <a href="#home"><span>🏠</span>Home</a>
-        <a href="#gallery"><span>📸</span>Gallery</a>
-        <a href="#about"><span>ℹ️</span>About</a>
-        <a href="#" onclick="handleMobileUser()"><span>👤</span>Account</a>
+        <a href="#home"><span>🏠</span><span>Home</span></a>
+        <a href="#gallery"><span>📸</span><span>Gallery</span></a>
+        
+        <a href="#booking-section" class="nav-book-btn">
+            <div class="book-circle">🏏</div>
+            <span>Book</span>
+        </a>
+        
+        <a href="#" onclick="openModal('adminAuthModal')"><span>⚙️</span><span>Admin</span></a>
+        <a href="#" onclick="handleMobileUser()"><span>👤</span><span>Account</span></a>
     </div>
 
     <!-- Hero Section (Video Loop) -->
@@ -325,13 +363,14 @@
             <p id="selected-slot-text" style="color: var(--dark-green); font-weight: 800; background: var(--bg-offwhite); padding: 10px; border-radius: 10px; margin-bottom: 15px; text-align: center;"></p>
             <form id="bookingForm">
                 <input type="text" id="b-name" placeholder="Captain's Full Name" required>
-                <input type="text" id="b-phone" placeholder="Phone Number (10 Digits)" pattern="\d{10}" maxlength="10" required>
+                <!-- Only accept 10 digits filter dynamically -->
+                <input type="text" id="b-phone" placeholder="Phone Number (10 Digits)" pattern="\d{10}" maxlength="10" required oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);">
                 <select id="b-payment" required>
                     <option value="" disabled selected>Select Payment Method</option>
                     <option value="UPI">UPI (GPay / PhonePe / Paytm)</option>
                     <option value="CASH">Cash at Ground</option>
                 </select>
-                <button type="submit" class="btn-primary" style="width:100%; margin-top:20px; background: var(--dark-green); color: white;">BOOK PITCH</button>
+                <button id="submitBookingBtn" type="submit" class="btn-primary" style="width:100%; margin-top:20px; background: var(--dark-green); color: white;">BOOK PITCH</button>
             </form>
         </div>
     </div>
@@ -353,6 +392,13 @@
                 <p><strong>Status:</strong> <span style="color: #d97706; font-weight: 800;">PENDING</span></p>
             </div>
 
+            <!-- UPI Payment Section (Visible only if UPI is selected) -->
+            <div id="upi-payment-section" style="display:none; margin-bottom: 15px; background: #faf5ff; padding: 15px; border-radius: var(--curve); border: 2px solid #a855f7;">
+                <h4 style="color:#7e22ce; margin-bottom:10px;">Step 1: Complete Payment</h4>
+                <a id="upi-link-btn" href="#" class="btn-primary" style="display:block; text-decoration:none; text-align:center; background:#a855f7; color:white;">📱 PAY VIA UPI APPS</a>
+            </div>
+
+            <p style="font-size: 13px; color: #6b7280; font-weight: 700; margin-bottom: 5px;">Step 2: Send WhatsApp Confirmation</p>
             <button class="btn-whatsapp" onclick="sendWhatsAppConfirmation()">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.01 2.014c-5.46 0-9.91 4.45-9.91 9.91 0 1.74.45 3.41 1.31 4.9L2 22l5.34-1.4c1.45.82 3.08 1.25 4.77 1.25 5.46 0 9.91-4.45 9.91-9.91 0-5.46-4.45-9.91-9.91-9.91zm0 18.23c-1.48 0-2.93-.39-4.2-1.14l-.3-.18-3.13.82.83-3.05-.2-.32c-.83-1.33-1.27-2.85-1.27-4.43 0-4.56 3.71-8.27 8.27-8.27 4.56 0 8.27 3.71 8.27 8.27 0 4.56-3.71 8.27-8.27 8.27zm4.53-6.17c-.25-.13-1.48-.73-1.71-.82-.23-.08-.39-.13-.56.13-.17.25-.64.82-.79.99-.14.17-.29.19-.54.06-1.12-.56-2.03-1.07-2.83-2.19-.21-.3-.02-.46.1-.58.12-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.32-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.32-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.02 2.6.13.17 1.77 2.7 4.29 3.79 1.15.5 1.84.67 2.51.84.7.18 1.34.15 1.84.09.56-.06 1.48-.6 1.69-1.19.21-.58.21-1.08.15-1.19-.06-.11-.23-.17-.48-.3z"/></svg>
                 Notify Admin via WhatsApp
@@ -436,6 +482,15 @@
         let lastPendingCount = 0;
         let currentBookingData = null;
 
+        // Overlay Loading Control
+        function showLoading(text) {
+            document.getElementById('loadingText').innerText = text;
+            document.getElementById('loadingOverlay').style.display = 'flex';
+        }
+        function hideLoading() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -447,6 +502,9 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
+            // ALWAYS LOG OUT THE USER WHEN PAGE IS OPENED OR REFRESHED
+            localStorage.removeItem('turf_user');
+
             const dateInput = document.getElementById('booking-date');
             const today = new Date();
             const nextWeek = new Date();
@@ -609,18 +667,23 @@
             const name = document.getElementById('b-name').value;
             const phone = document.getElementById('b-phone').value;
             const payment = document.getElementById('b-payment').value;
+            const submitBtn = document.getElementById('submitBookingBtn');
+
+            // Force the form to stay open and show processing state
+            submitBtn.disabled = true;
+            submitBtn.innerText = "PROCESSING BOOKING...";
 
             const payload = { action: "book", date: date, slot: selectedSlot, name: name, email: currentUser, phone: phone, payment: payment };
-            
             currentBookingData = { date: date, slot: selectedSlot, name: name, price: slotPrice, payment: payment };
 
-            closeModal('bookingModal');
-            showToast("Processing booking...", "success");
-
             try {
+                // Wait for the backend response BEFORE closing the modal
                 await fetch('https://aks-turf-backend.vercel.app/api/db', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
                 });
+                
+                // Now safely close and show success
+                closeModal('bookingModal');
                 showToast("Booking request sent! Waiting for Admin approval.", "success");
                 
                 document.getElementById('slip-name').innerText = name;
@@ -628,16 +691,25 @@
                 document.getElementById('slip-slot').innerText = selectedSlot;
                 document.getElementById('slip-price').innerText = slotPrice;
                 document.getElementById('slip-payment').innerText = payment;
-                openModal('successModal');
 
-                fetchSlots(); 
-
+                // Configure the UPI payment section in success modal
                 if(payment === 'UPI') {
+                    document.getElementById('upi-payment-section').style.display = 'block';
                     const upiLink = `upi://pay?pa=aaryesh.honrao@fam&pn=AKS%20Turf&am=${slotPrice}&cu=INR&tn=Turf%20Booking%20${date}%20${selectedSlot}`;
-                    setTimeout(() => { window.location.href = upiLink; }, 1000); 
+                    document.getElementById('upi-link-btn').href = upiLink;
+                } else {
+                    document.getElementById('upi-payment-section').style.display = 'none';
                 }
 
-            } catch (error) { showToast("Booking failed.", "error"); }
+                openModal('successModal');
+                fetchSlots(); 
+
+            } catch (error) { 
+                showToast("Booking failed.", "error"); 
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "BOOK PITCH";
+            }
         });
 
         function closeSuccessModal() {
@@ -647,7 +719,8 @@
 
         function sendWhatsAppConfirmation() {
             if(!currentBookingData) return;
-            const text = `Hello AKS Turf!%0AI just requested a slot booking.%0A%0A*Name:* ${currentBookingData.name}%0A*Date:* ${currentBookingData.date}%0A*Slot:* ${currentBookingData.slot}%0A*Amount:* ₹${currentBookingData.price}%0A*Payment Mode:* ${currentBookingData.payment}%0A%0APlease confirm my booking.`;
+            const paymentStatus = currentBookingData.payment === 'UPI' ? 'Payment sent via UPI' : 'Will pay Cash at ground';
+            const text = `Hello AKS Turf!%0AI just requested a slot booking.%0A%0A*Name:* ${currentBookingData.name}%0A*Date:* ${currentBookingData.date}%0A*Slot:* ${currentBookingData.slot}%0A*Amount:* ₹${currentBookingData.price}%0A*Payment Info:* ${paymentStatus}%0A%0APlease confirm my booking.`;
             window.open(`https://wa.me/919175023438?text=${text}`, '_blank');
         }
 
@@ -738,28 +811,38 @@
         }
 
         async function updateStatus(date, slot, newStatus) {
+            showLoading(`Locking status to ${newStatus}...`);
             try {
                 await fetch('https://aks-turf-backend.vercel.app/api/db', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ action: "updateStatus", date: date, slot: slot, status: newStatus })
                 });
                 showToast(`Status updated to ${newStatus}!`);
-                loadAdminData(); 
-            } catch(e) { showToast("Failed to update status", "error"); }
+                await loadAdminData(); 
+            } catch(e) { 
+                showToast("Failed to update status", "error"); 
+            } finally {
+                hideLoading();
+            }
         }
 
         async function adminBlockEntireDay() {
             const date = document.getElementById('admin-date-picker').value;
             if(!confirm(`Are you sure you want to BLOCK ALL SLOTS on ${date} for an Event?`)) return;
 
+            showLoading(`Blocking all slots on ${date}...`);
             try {
                 await fetch('https://aks-turf-backend.vercel.app/api/db', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ action: "blockDay", date: date })
                 });
                 showToast(`Successfully blocked all slots on ${date}!`, "event");
-                loadAdminData(); 
-            } catch(e) { showToast("Failed to block day", "error"); }
+                await loadAdminData(); 
+            } catch(e) { 
+                showToast("Failed to block day", "error"); 
+            } finally {
+                hideLoading();
+            }
         }
     </script>
 </body>
