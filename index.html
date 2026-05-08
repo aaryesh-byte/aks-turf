@@ -1,3 +1,5 @@
+--- START OF FILE Paste May 08, 2026 - 2:43PM ---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -182,20 +184,21 @@
             .bottom-nav { 
                 display: flex; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
                 width: 95%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); 
-                padding: 10px 15px; border-radius: 50px; justify-content: space-between; align-items: flex-end; 
+                padding: 10px 15px; border-radius: 50px; justify-content: space-between; align-items: center; 
                 z-index: 1000; border: 1px solid rgba(255,255,255,0.5); box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
             }
             .bottom-nav a { 
                 font-size: 22px; text-decoration: none; transition: 0.3s; color: var(--dark-green); 
                 display: flex; flex-direction: column; align-items: center; font-size: 11px; font-weight: 800; gap: 5px; flex: 1;
+                justify-content: center;
             }
             .bottom-nav a span:first-child { font-size: 20px; }
 
-            .nav-book-btn { position: relative; top: -15px; }
+            .nav-book-btn { position: relative; }
             .nav-book-btn .book-circle {
-                background: var(--primary-green); width: 60px; height: 60px; border-radius: 50%;
-                display: flex; justify-content: center; align-items: center; font-size: 24px;
-                box-shadow: 0 5px 20px rgba(52, 211, 153, 0.6); border: 4px solid white; margin-bottom: 5px;
+                background: var(--primary-green); width: 50px; height: 50px; border-radius: 50%;
+                display: flex; justify-content: center; align-items: center; font-size: 20px;
+                box-shadow: 0 5px 15px rgba(52, 211, 153, 0.4); margin-bottom: 2px;
                 color: var(--dark-green);
             }
 
@@ -205,10 +208,19 @@
             .about-layout { flex-direction: column; }
             .hero-content h1 { font-size: 3.5rem; }
             .floating-btns { bottom: 115px; right: 20px;} body { padding-bottom: 120px; } 
+
+            /* Enhanced Mobile Admin Panel View */
             .admin-fullscreen { flex-direction: column; }
-            .admin-sidebar { width: 100%; padding: 20px; height: auto; border-radius: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1); z-index: 10; gap: 10px;}
-            .admin-main { padding: 20px; }
-            .admin-sidebar .logo { margin-bottom: 10px; font-size: 24px; background: transparent; box-shadow: none; border: none; padding: 0;}
+            .admin-sidebar { width: 100%; padding: 15px; height: auto; border-radius: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1); z-index: 10; gap: 8px;}
+            .admin-main { padding: 15px; padding-bottom: 50px;}
+            .admin-sidebar .logo { display: none; }
+            .admin-nav-btn { padding: 12px; font-size: 14px; flex: 1; justify-content: center;}
+            .admin-sidebar { flex-direction: row; flex-wrap: wrap; justify-content: center;}
+            .admin-close { width: 100%; margin-top: 5px; }
+            .section-title { font-size: 1.8rem !important; text-align: center; }
+            .admin-table { font-size: 12px; }
+            .admin-table th, .admin-table td { padding: 10px 8px; }
+            .btn-action { padding: 6px 10px; font-size: 11px; margin-bottom: 4px; display: block; width: 100%; text-align: center;}
         }
 
         @keyframes shimmer { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
@@ -257,7 +269,7 @@
             <span>Book</span>
         </a>
         
-        <a href="#" onclick="openModal('adminAuthModal')"><span>⚙️</span><span>Admin</span></a>
+        <a href="#about"><span>ℹ️</span><span>About</span></a>
         <a href="#" onclick="handleMobileUser()"><span>👤</span><span>Account</span></a>
     </div>
 
@@ -297,13 +309,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- NEW: Review Button Placed Right Below Slot Booking -->
-        <div style="text-align: center; margin-top: 40px;">
-            <button class="btn-primary" onclick="openModal('reviewModal')" style="background: white; border: 2px solid var(--primary-green); color: var(--dark-green); display: inline-flex; align-items: center; gap: 8px;">
-                ⭐ WRITE A REVIEW
-            </button>
-        </div>
     </section>
 
     <section class="reviews-section">
@@ -316,14 +321,21 @@
         </div>
     </section>
 
+    <!-- NEW REPOSITIONED REVIEW BUTTON -->
+    <div style="text-align: center; margin-top: 30px; margin-bottom: 50px;">
+        <button class="btn-primary" onclick="openModal('reviewModal')" style="background: white; border: 2px solid var(--primary-green); color: var(--dark-green); display: inline-flex; align-items: center; gap: 8px;">
+            ⭐ WRITE A REVIEW
+        </button>
+    </div>
+
     <section id="about" class="about-section">
         <h2 class="section-title" style="text-align: center;">ABOUT <span>US</span></h2>
         <div class="about-layout">
             <div class="about-text-box">
                 <h3>AKS Turf - The Ultimate Cricket Arena</h3>
                 <p>Designed strictly for cricket lovers. At AKS Turf, we provide a premium sporting environment equipped with a high-quality pitch, tall boundary netting so you can hit big, and professional floodlights for night matches.</p>
-                <div class="contact-pill"><p><strong>📞 Phone Line:</strong> +91 91750 23438</p></div>
-                <div class="contact-pill"><p><strong>📍 Turf Location:</strong> Najushri Sanskruti Hall, Jai Jinendra Pratisthan</p></div>
+                <div class="contact-pill"><p style="margin: 10px 0;"><strong>📞 Phone Line:</strong> +91 91750 23438</p></div>
+                <div class="contact-pill"><p style="margin: 10px 0;"><strong>📍 Turf Location:</strong> Najushri Sanskruti Hall, Jai Jinendra Pratisthan</p></div>
             </div>
             <div class="map-box">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3784.2096276958473!2d73.8700073757962!3d18.474161470589106!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2ea9a0c54db15%3A0x6feb5876a316843!2sNajushri%20Sanskruti%20Hall%2C%20Jai%20Jinendra%20Pratisthan!5e0!3m2!1sen!2sin!4v1777719310941!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
@@ -354,6 +366,27 @@
                 <button class="btn-auth-solid" onclick="handleAuth('signup')">CREATE ACCOUNT</button>
                 <button class="btn-auth-outline" onclick="toggleAuthMode('login')">Back to Sign In</button>
             </div>
+        </div>
+    </div>
+
+    <!-- User Action/Mobile Account Modal -->
+    <div id="userActionsModal" class="modal">
+        <div class="modal-content" style="padding: 30px;">
+            <span class="close" onclick="closeModal('userActionsModal')">&times;</span>
+            <h2 class="section-title" style="font-size: 2rem; text-align: center;">MY <span>ACCOUNT</span></h2>
+            <div id="account-status-text" style="text-align: center; margin-bottom: 20px; font-weight: 800; color: var(--dark-green);"></div>
+            
+            <div id="mobile-auth-section">
+                <button class="btn-auth-solid" onclick="closeModal('userActionsModal'); openModal('loginModal');">🔑 LOGIN / SIGN UP</button>
+            </div>
+            
+            <div id="mobile-user-section" style="display:none;">
+                <button class="btn-auth-outline" style="color:#ef4444; border-color:#ef4444;" onclick="logout(); closeModal('userActionsModal');">🚪 LOGOUT</button>
+            </div>
+
+            <hr style="margin: 25px 0; border: none; border-top: 1px solid #e5e7eb;">
+            <p style="text-align:center; font-size:12px; font-weight:800; color:#9ca3af; margin-bottom:10px;">STAFF ONLY</p>
+            <button class="btn-auth-outline" style="background:#f3f4f6;" onclick="closeModal('userActionsModal'); openModal('adminAuthModal');">⚙️ ADMIN PANEL</button>
         </div>
     </div>
 
@@ -438,10 +471,10 @@
     <div id="adminDashboardFullscreen" class="admin-fullscreen">
         <div class="admin-sidebar">
             <div class="logo">⚡ AKS <br><span style="color:var(--primary-green);">TURF</span><br><span style="font-size:14px; font-weight:400; color:#a7f3d0;">Admin Panel</span></div>
-            <hr style="border-color: rgba(255,255,255,0.1); margin-bottom: 10px;">
+            <hr class="admin-divider" style="border-color: rgba(255,255,255,0.1); margin-bottom: 10px;">
             <!-- NEW: Switchable Sidebar Tabs -->
-            <button class="admin-nav-btn active" id="tab-bookings" onclick="switchAdminTab('bookings')">📅 Daily Schedule</button>
-            <button class="admin-nav-btn" id="tab-reviews" onclick="switchAdminTab('reviews')">⭐ User Reviews</button>
+            <button class="admin-nav-btn active" id="tab-bookings" onclick="switchAdminTab('bookings')">📅 Schedule</button>
+            <button class="admin-nav-btn" id="tab-reviews" onclick="switchAdminTab('reviews')">⭐ Reviews</button>
             
             <button class="admin-nav-btn admin-close" onclick="closeAdminDashboard()">⬅ Exit Admin</button>
         </div>
@@ -456,33 +489,33 @@
                         <label style="font-size: 12px; margin-bottom: 5px; display: block; color: #a7f3d0; font-weight: 800;">MANAGE DATE:</label>
                         <input type="date" id="admin-date-picker" onchange="loadAdminData()">
                     </div>
-                    <div>
-                        <button class="btn-primary" style="background:#a855f7; padding: 15px 20px; font-size:14px; margin-right: 10px;" onclick="adminBlockEntireDay()">🚫 Block Entire Day</button>
-                        <button class="btn-primary" style="padding: 15px 20px; font-size:14px;" onclick="loadAdminData()">🔄 Refresh</button>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn-primary" style="background:#a855f7; padding: 12px 15px; font-size:12px;" onclick="adminBlockEntireDay()">🚫 Block Day</button>
+                        <button class="btn-primary" style="padding: 12px 15px; font-size:12px;" onclick="loadAdminData()">🔄 Refresh</button>
                     </div>
                 </div>
 
                 <div id="admin-pending-area" style="display:none; background:#fef08a; padding:20px; border-radius:var(--curve); margin-bottom:30px; border: 2px solid #eab308; box-shadow: 0 4px 15px rgba(234, 179, 8, 0.2);">
-                    <h3 style="color:#854d0e; margin-bottom:15px; font-size: 18px;">⚠️ Action Required: Pending Bookings</h3>
+                    <h3 style="color:#854d0e; margin-bottom:15px; font-size: 18px;">⚠️ Action Required: Pending</h3>
                     <div id="pending-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
                 </div>
 
                 <div style="display: flex; gap: 30px; flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 350px;">
-                        <h3 style="color:var(--dark-green); margin-bottom:15px;">Slot Availability Overview</h3>
+                    <div style="flex: 1; min-width: 300px;">
+                        <h3 style="color:var(--dark-green); margin-bottom:15px; font-size: 1.2rem;">Slot Availability</h3>
                         <div style="overflow-x:auto;">
                             <table class="admin-table" id="overview-table">
-                                <thead><tr><th>Time Slot</th><th>Status</th><th>Admin Action</th></tr></thead>
+                                <thead><tr><th>Time</th><th>Status</th><th>Action</th></tr></thead>
                                 <tbody id="overview-body"></tbody>
                             </table>
                         </div>
                     </div>
 
-                    <div style="flex: 1; min-width: 350px;">
-                        <h3 style="color:var(--dark-green); margin-bottom:15px;">Booked Slot Details</h3>
+                    <div style="flex: 1; min-width: 300px;">
+                        <h3 style="color:var(--dark-green); margin-bottom:15px; font-size: 1.2rem;">Booked Details</h3>
                         <div style="overflow-x:auto;">
                             <table class="admin-table">
-                                <thead><tr><th>Name</th><th>Phone</th><th>Slot</th><th>Payment</th><th>Status</th></tr></thead>
+                                <thead><tr><th>Captain</th><th>Slot</th><th>Status</th></tr></thead>
                                 <tbody id="details-body"></tbody>
                             </table>
                         </div>
@@ -490,7 +523,7 @@
                 </div>
             </div>
 
-            <!-- NEW: TAB 2: Reviews View -->
+            <!-- TAB 2: Reviews View -->
             <div id="admin-reviews-view" style="display:none;">
                 <h2 class="section-title" style="font-size: 2.5rem;">USER <span>REVIEWS</span></h2>
                 <div style="background:white; padding:20px; border-radius:var(--curve); border: 1px solid #e5e7eb; box-shadow: 0 4px 10px rgba(0,0,0,0.02);">
@@ -562,7 +595,23 @@
         function toggleMenu() { document.getElementById('menuLinks').classList.toggle('active'); }
         function openModal(id) { document.getElementById(id).style.display = 'block'; document.getElementById('menuLinks').classList.remove('active'); }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-        function handleMobileUser() { if(currentUser) { if(confirm("Logout from your account?")) logout(); } else { openModal('loginModal'); } }
+        
+        function handleMobileUser() { 
+            const statusBox = document.getElementById('account-status-text');
+            const authSec = document.getElementById('mobile-auth-section');
+            const userSec = document.getElementById('mobile-user-section');
+
+            if(currentUser) {
+                statusBox.innerText = `Logged in as: ${currentUser.split('@')[0]}`;
+                authSec.style.display = 'none';
+                userSec.style.display = 'block';
+            } else {
+                statusBox.innerText = `Guest User`;
+                authSec.style.display = 'block';
+                userSec.style.display = 'none';
+            }
+            openModal('userActionsModal');
+        }
 
         function toggleAuthMode(mode) {
             if(mode === 'signup') {
@@ -807,7 +856,6 @@
             fetchSlots(); 
         }
 
-        /* Switch Between Admin Panel Tabs */
         function switchAdminTab(tab) {
             document.getElementById('tab-bookings').classList.remove('active');
             document.getElementById('tab-reviews').classList.remove('active');
@@ -817,11 +865,7 @@
             document.getElementById('tab-' + tab).classList.add('active');
             document.getElementById('admin-' + tab + '-view').style.display = 'block';
 
-            if (tab === 'reviews') {
-                loadAdminReviews();
-            } else {
-                loadAdminData();
-            }
+            if (tab === 'reviews') { loadAdminReviews(); } else { loadAdminData(); }
         }
 
         async function loadAdminData(isBackground = false) {
@@ -845,11 +889,11 @@
                 if(pendingBookings.length > 0) {
                     pendingArea.style.display = 'block';
                     pendingList.innerHTML = pendingBookings.map(b => `
-                        <div style="background:white; padding:15px; border-radius:12px; display:flex; justify-content:space-between; align-items:center; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-                            <div><strong style="color:var(--dark-green); font-size:16px;">${b.slot}</strong><br><span style="color:#4b5563;">${b.name} (${b.phone}) | ${b.payment}</span></div>
-                            <div>
-                                <button class="btn-action btn-approve" onclick="updateStatus('${date}', '${b.slot}', 'confirmed')">Confirm ✅</button>
-                                <button class="btn-action btn-deny" onclick="updateStatus('${date}', '${b.slot}', 'cancelled')">Deny ❌</button>
+                        <div style="background:white; padding:15px; border-radius:12px; display:flex; flex-direction:column; gap:10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                            <div><strong style="color:var(--dark-green); font-size:16px;">${b.slot}</strong><br><span style="color:#4b5563; font-size:13px;">${b.name} (${b.phone})<br>${b.payment}</span></div>
+                            <div style="display:flex; gap:10px;">
+                                <button class="btn-action btn-approve" style="flex:1" onclick="updateStatus('${date}', '${b.slot}', 'confirmed')">Confirm ✅</button>
+                                <button class="btn-action btn-deny" style="flex:1" onclick="updateStatus('${date}', '${b.slot}', 'cancelled')">Deny ❌</button>
                             </div>
                         </div>
                     `).join('');
@@ -858,17 +902,16 @@
                 const overviewBody = document.getElementById('overview-body');
                 overviewBody.innerHTML = ALL_SLOTS.map(slot => {
                     const b = bookings.find(x => String(x.slot).trim() === String(slot).trim());
-                    let statusText = '<span style="color:green;font-weight:bold;">AVAILABLE</span>';
-                    let actionBtn = `<button class="btn-action" style="background:#6b7280;" onclick="updateStatus('${date}', '${slot}', 'blocked')">Block Slot 🚫</button>`;
+                    let statusText = '<span style="color:green;font-weight:bold;">OPEN</span>';
+                    let actionBtn = `<button class="btn-action" style="background:#6b7280;" onclick="updateStatus('${date}', '${slot}', 'blocked')">Block 🚫</button>`;
 
                     if (b) {
                         let bStat = String(b.status).trim().toLowerCase();
-                        if (bStat === 'confirmed') { statusText = '<span style="color:red;font-weight:bold;">BOOKED</span>'; actionBtn = `<button class="btn-action btn-deny" onclick="updateStatus('${date}', '${slot}', 'available')">Cancel Book ❌</button>`; }
-                        else if (bStat === 'pending') { statusText = '<span style="color:orange;font-weight:bold;">PENDING</span>'; actionBtn = `<span style="color:gray; font-size:12px; font-weight:800;">Review in Pending Section</span>`; }
-                        else if (bStat === 'blocked') { statusText = '<span style="color:gray;font-weight:bold;">BLOCKED (MANUAL)</span>'; actionBtn = `<button class="btn-action" style="background:#22c55e;" onclick="updateStatus('${date}', '${slot}', 'available')">Open Slot ✅</button>`; }
-                        else if (bStat === 'event_blocked') { statusText = '<span style="color:purple;font-weight:bold;">EVENT CLOSED</span>'; actionBtn = `<button class="btn-action" style="background:#ccc;" disabled>Locked by Event</button>`; }
+                        if (bStat === 'confirmed') { statusText = '<span style="color:red;font-weight:bold;">BOOKED</span>'; actionBtn = `<button class="btn-action btn-deny" onclick="updateStatus('${date}', '${slot}', 'available')">Cancel ❌</button>`; }
+                        else if (bStat === 'pending') { statusText = '<span style="color:orange;font-weight:bold;">WAITING</span>'; actionBtn = `<span style="color:gray; font-size:10px;">Review Pending</span>`; }
+                        else if (bStat === 'blocked') { statusText = '<span style="color:gray;font-weight:bold;">BLOCKED</span>'; actionBtn = `<button class="btn-action" style="background:#22c55e;" onclick="updateStatus('${date}', '${slot}', 'available')">Open ✅</button>`; }
+                        else if (bStat === 'event_blocked') { statusText = '<span style="color:purple;font-weight:bold;">EVENT</span>'; actionBtn = `<button class="btn-action" style="background:#ccc;" disabled>Locked</button>`; }
                     }
-
                     return `<tr><td>${slot}</td><td>${statusText}</td><td>${actionBtn}</td></tr>`;
                 }).join('');
 
@@ -879,16 +922,15 @@
                 });
                 
                 detailsBody.innerHTML = activeBookings.length ? activeBookings.map(b => `
-                    <tr><td>${b.name}</td><td>${b.phone}</td><td>${b.slot}</td><td>${b.payment}</td><td style="font-weight:800; color:${String(b.status).trim().toLowerCase()==='confirmed'?'green':'orange'}">${String(b.status).trim().toUpperCase()}</td></tr>
-                `).join('') : `<tr><td colspan="5" style="text-align:center; padding: 20px; color: #6b7280;">No active user bookings for this date.</td></tr>`;
+                    <tr><td>${b.name.split(' ')[0]}</td><td>${b.slot.split(' ')[0]}</td><td style="font-weight:800; color:${String(b.status).trim().toLowerCase()==='confirmed'?'green':'orange'}">${String(b.status).trim().toUpperCase()}</td></tr>
+                `).join('') : `<tr><td colspan="3" style="text-align:center; padding: 20px; color: #6b7280;">No bookings yet.</td></tr>`;
 
             } catch(e) { if(!isBackground) showToast("Admin fetch failed.", "error"); }
         }
 
         async function loadAdminReviews() {
             const tbody = document.getElementById('admin-reviews-body');
-            tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 20px;">Loading reviews...</td></tr>';
-            
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 20px;">Loading...</td></tr>';
             try {
                 const res = await fetch('https://aks-turf-backend.vercel.app/api/db', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -896,62 +938,38 @@
                 });
                 const response = await res.json();
                 const reviews = response.data || [];
-                
-                if (reviews.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 20px; color: #6b7280;">No reviews found yet.</td></tr>';
-                    return;
-                }
-
+                if (reviews.length === 0) { tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No reviews.</td></tr>'; return; }
                 tbody.innerHTML = reviews.map(r => {
-                    // Create visual stars out of the rating number
-                    const ratingStr = '⭐'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
-                    return `
-                        <tr>
-                            <td style="white-space: nowrap;">${new Date(r.timestamp).toLocaleDateString()}</td>
-                            <td style="font-weight: bold; color: var(--dark-green);">${r.name}</td>
-                            <td style="color: #facc15; font-size: 16px; letter-spacing: 2px;">${ratingStr}</td>
-                            <td style="color: #4b5563;">${r.reviewText}</td>
-                        </tr>
-                    `;
+                    const stars = '⭐'.repeat(r.rating);
+                    return `<tr><td>${new Date(r.timestamp).toLocaleDateString()}</td><td>${r.name}</td><td>${stars}</td><td>${r.reviewText}</td></tr>`;
                 }).join('');
-            } catch (e) {
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 20px; color: red;">Failed to load reviews.</td></tr>';
-            }
+            } catch (e) { tbody.innerHTML = '<tr><td colspan="4">Error.</td></tr>'; }
         }
 
         async function updateStatus(date, slot, newStatus) {
-            showLoading(`Locking status to ${newStatus}...`);
+            showLoading(`Updating...`);
             try {
                 await fetch('https://aks-turf-backend.vercel.app/api/db', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ action: "updateStatus", date: date, slot: slot, status: newStatus })
                 });
-                showToast(`Status updated to ${newStatus}!`);
+                showToast(`Updated!`);
                 await loadAdminData(); 
-            } catch(e) { 
-                showToast("Failed to update status", "error"); 
-            } finally {
-                hideLoading();
-            }
+            } catch(e) { showToast("Failed", "error"); } finally { hideLoading(); }
         }
 
         async function adminBlockEntireDay() {
             const date = document.getElementById('admin-date-picker').value;
-            if(!confirm(`Are you sure you want to BLOCK ALL SLOTS on ${date} for an Event?`)) return;
-
-            showLoading(`Blocking all slots on ${date}...`);
+            if(!confirm(`Block ALL SLOTS on ${date}?`)) return;
+            showLoading(`Blocking...`);
             try {
                 await fetch('https://aks-turf-backend.vercel.app/api/db', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ action: "blockDay", date: date })
                 });
-                showToast(`Successfully blocked all slots on ${date}!`, "event");
+                showToast(`Day Blocked!`, "event");
                 await loadAdminData(); 
-            } catch(e) { 
-                showToast("Failed to block day", "error"); 
-            } finally {
-                hideLoading();
-            }
+            } catch(e) { showToast("Failed", "error"); } finally { hideLoading(); }
         }
     </script>
 </body>
