@@ -570,7 +570,6 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            localStorage.removeItem('turf_user');
             const dateInput = document.getElementById('booking-date');
             const today = new Date();
             const nextWeek = new Date();
@@ -704,7 +703,7 @@
                 let btnState = "", btnText = "BOOK PITCH", statusClass = "status-available", statusText = "AVAILABLE";
                 let cardClass = "slot-card"; 
 
-                if(booking) {
+                if(booking && String(booking.status).trim().toLowerCase() !== 'available') {
                     btnState = "disabled";
                     cardClass = "slot-card greyed-out"; 
                     
