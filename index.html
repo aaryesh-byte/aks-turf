@@ -1,9 +1,11 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AKS Turf | Premium Cricket Arena</title>
+    <!-- Simple, Rounded & Satisfying Font (Nunito) -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400;1,700&display=swap" rel="stylesheet">
     
     <style>
@@ -14,25 +16,25 @@
             --bg-offwhite: #f0fdf4;
             --text-dark: #1f2937;
             --text-light: #ffffff;
-            --border-color: #e5e7eb;
             --card-bg: #ffffff;
+            --border-color: #e5e7eb;
             --curve: 25px;
             --font-main: 'Nunito', sans-serif;
         }
 
-        /* Dark Mode Colors */
-        body.dark-theme {
+        [data-theme="dark"] {
             --bg-light: #0f172a;
             --bg-offwhite: #1e293b;
-            --text-dark: #f1f5f9;
+            --text-dark: #f8fafc;
             --card-bg: #1e293b;
             --border-color: #334155;
+            --dark-green: #10b981;
         }
 
         html { scroll-behavior: smooth; scroll-padding-top: 120px; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, button, input, select, textarea { font-family: var(--font-main); transition: background 0.3s, color 0.3s; }
-        body { background-color: var(--bg-light); color: var(--text-dark); padding-bottom: 20px;}
+        body, button, input, select, textarea { font-family: var(--font-main); }
+        body { background-color: var(--bg-light); color: var(--text-dark); padding-bottom: 20px; transition: background 0.3s, color 0.3s;}
 
         /* Global Loading Overlay */
         .loading-overlay {
@@ -47,12 +49,6 @@
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* Small spinner for Admin Pending */
-        .admin-mini-spinner {
-            width: 20px; height: 20px; border: 3px solid rgba(0,0,0,0.1); border-top-color: var(--dark-green);
-            border-radius: 50%; animation: spin 1s linear infinite; display: inline-block;
-        }
-
         /* Floating Navigation */
         nav { 
             display: flex; justify-content: space-between; align-items: center; 
@@ -62,144 +58,162 @@
             position: fixed; width: 90%; max-width: 1200px; z-index: 1000; 
             top: 20px; left: 50%; transform: translateX(-50%); border-radius: 50px; 
         }
-        body.dark-theme nav { background: rgba(15, 23, 42, 0.8); border-color: rgba(255,255,255,0.1); }
+        [data-theme="dark"] nav { background: rgba(15, 23, 42, 0.8); border-color: rgba(255,255,255,0.1); }
         
         .logo { font-size: 26px; color: var(--dark-green); text-decoration: none; font-weight: 800; cursor: pointer; letter-spacing: -0.5px; transition: 0.3s; }
-        body.dark-theme .logo { color: white; }
         .logo span { color: var(--primary-green); }
-        .nav-center { display: flex; gap: 30px; align-items: center; }
-        .nav-center a { color: var(--dark-green); text-decoration: none; font-weight: 700; font-size: 16px; text-transform: uppercase; transition: 0.3s;}
-        body.dark-theme .nav-center a { color: white; }
+        .nav-center { display: flex; gap: 20px; align-items: center; }
+        .nav-center a { color: var(--text-dark); text-decoration: none; font-weight: 700; font-size: 15px; text-transform: uppercase; transition: 0.3s;}
         .nav-center a:hover { color: var(--primary-green); }
 
-        .theme-toggle-btn {
-            background: var(--dark-green); color: white; border: none; padding: 8px 12px; border-radius: 20px; cursor: pointer; font-weight: 700; font-size: 14px;
-        }
+        /* Theme Toggle Btn */
+        .theme-toggle { background: var(--bg-offwhite); border: 1px solid var(--border-color); color: var(--text-dark); padding: 8px 12px; border-radius: 20px; cursor: pointer; font-weight: 800; font-size: 14px; display: flex; align-items: center; gap: 5px; transition: 0.3s;}
 
-        .hamburger { display: flex; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1001; background: rgba(240, 253, 244, 0.8); padding: 12px; border-radius: 50%; width: 45px; height: 45px; justify-content: center; align-items: center; transition: 0.3s;}
-        .hamburger span { width: 22px; height: 3px; background: var(--dark-green); border-radius: 5px; transition: 0.3s; }
+        .hamburger { display: flex; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1001; background: var(--bg-offwhite); padding: 12px; border-radius: 50%; width: 45px; height: 45px; justify-content: center; align-items: center; transition: 0.3s;}
+        .hamburger span { width: 22px; height: 3px; background: var(--text-dark); border-radius: 5px; transition: 0.3s; }
         
         .menu-links { 
             position: absolute; top: 75px; right: 15px; flex-direction: column; 
-            background: rgba(6, 78, 59, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.2); width: 240px; padding: 25px; border-radius: 25px; 
+            background: var(--bg-offwhite); backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color); width: 240px; padding: 25px; border-radius: 25px; 
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
             display: flex; gap: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2);
             opacity: 0; transform: translateY(-20px) scale(0.95); pointer-events: none; transform-origin: top right;
             align-items: center; 
         }
         .menu-links.active { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
-        .menu-links a, .menu-links button { color: white; text-decoration: none; font-size: 16px; font-weight: 700; background: none; border: none; cursor: pointer; text-align: center; width: 100%; transition: 0.2s;}
-
+        .menu-links a, .menu-links button { color: var(--text-dark); text-decoration: none; font-size: 16px; font-weight: 700; background: none; border: none; cursor: pointer; text-align: center; width: 100%; transition: 0.2s;}
+        
         .toast-container { position: fixed; top: 100px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 15px; pointer-events: none; }
-        .toast { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-left: 5px solid var(--primary-green); padding: 15px 25px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); font-weight: 700; color: var(--dark-green); transform: translateX(120%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: auto; max-width: 320px; }
+        .toast { background: var(--card-bg); border-left: 5px solid var(--primary-green); padding: 15px 25px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); font-weight: 700; color: var(--text-dark); transform: translateX(120%); transition: transform 0.4s; pointer-events: auto; max-width: 320px; }
         .toast.show { transform: translateX(0); }
 
-        /* Hero Section (Image) */
+        /* Hero Section */
         .hero { 
-            position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;
+            position: relative; height: 85vh; display: flex; align-items: center; justify-content: center; text-align: center;
             border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; padding: 0 5%; overflow: hidden;
-            background: url('hero.png') center/cover no-repeat;
+            background: url('hero.png') no-repeat center center; background-size: cover;
         }
         .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(6, 78, 59, 0.6), rgba(2, 44, 34, 0.8)); z-index: 1;}
         .hero-content { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .hero-content h1 { font-size: 5rem; line-height: 1; margin: 20px 0; text-transform: uppercase; color: var(--text-light); font-weight: 800;}
+        .hero-content h1 { font-size: 4.5rem; line-height: 1; margin: 20px 0; text-transform: uppercase; color: #ffffff; font-weight: 800;}
         .hero-content h1 span { color: var(--primary-green); font-style: italic; }
         
-        .btn-primary { padding: 15px 30px; border: none; border-radius: var(--curve); font-weight: 800; cursor: pointer; background: var(--primary-green); color: var(--dark-green); transition: 0.3s; text-transform: uppercase; font-size: 16px; box-shadow: 0 10px 20px rgba(0,0,0,0.2);}
+        .btn-primary { padding: 15px 30px; border: none; border-radius: var(--curve); font-weight: 800; cursor: pointer; background: var(--primary-green); color: #064e3b; transition: 0.3s; text-transform: uppercase; font-size: 16px; box-shadow: 0 10px 20px rgba(0,0,0,0.2);}
         .btn-primary:hover { background: white; transform: scale(1.05);}
 
         /* Booking Section */
-        .booking-container { padding: 80px 5%; background: var(--bg-offwhite); color: var(--text-dark); border-radius: 40px; margin: 20px 5%; border: 2px solid var(--border-color);}
-        .slot-card { background: var(--card-bg); border-radius: var(--curve); padding: 20px; width: 100%; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-color); transition: 0.3s;}
+        .booking-container { padding: 60px 5%; background: var(--bg-offwhite); color: var(--text-dark); border-radius: 40px; margin: 20px 5%; border: 2px solid var(--border-color);}
+        .slot-category { font-size: 1.4rem; font-weight: 800; margin-bottom: 15px; color: var(--dark-green); text-align: center;}
+        .booking-layout { display: flex; gap: 30px; }
+        .slots-area { flex: 2; }
+        .slots-grid { display: flex; gap: 20px; width: 100%; }
+        .slots-column { flex: 1; display: flex; flex-direction: column; gap: 12px; }
         
-        .btn-book { background: var(--dark-green); color: white; border: none; padding: 10px 20px; border-radius: var(--curve); cursor: pointer; font-weight: 800; margin-top: 10px; transition: 0.3s;}
+        .slot-card { background: var(--card-bg); border-radius: var(--curve); padding: 18px; width: 100%; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-color); transition: 0.3s;}
+        .slot-card.greyed-out { opacity: 0.5; pointer-events: none; }
 
-        .modal-content { background: var(--card-bg); color: var(--text-dark); margin: 5% auto; padding: 40px; width: 90%; max-width: 450px; border-radius: var(--curve); position: relative; border: 4px solid var(--primary-green);}
-        input, select, textarea { background: var(--bg-light); color: var(--text-dark); width: 100%; padding: 15px; margin: 10px 0; border: 2px solid var(--border-color); border-radius: 15px; outline: none; font-size: 16px; font-weight: 600;}
+        .status-available { background: #dcfce7; color: #166534; padding: 5px 10px; border-radius: var(--curve); font-size: 11px; font-weight: 800;}
+        .status-booked { background: #fee2e2; color: #991b1b; padding: 5px 10px; border-radius: var(--curve); font-size: 11px; font-weight: 800;}
+        
+        .btn-book { background: #064e3b; color: white; border: none; padding: 10px 18px; border-radius: var(--curve); cursor: pointer; font-weight: 800; margin-top: 10px; transition: 0.3s;}
 
-        /* Admin Fullscreen */
+        .panel-card { background: var(--card-bg); padding: 20px; border-radius: var(--curve); box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: sticky; top: 120px; border: 1px solid var(--border-color);}
+        .date-picker-box { background: #064e3b; color: white; padding: 15px; border-radius: var(--curve); }
+        .date-picker-box input { background: transparent; border: none; color: white; font-size: 16px; font-weight: 800; outline: none; width: 100%; color-scheme: dark;}
+        
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(6, 78, 59, 0.85); backdrop-filter: blur(5px); overflow-y: auto;}
+        .modal-content { background: var(--bg-light); margin: 5% auto; padding: 35px; width: 90%; max-width: 450px; border-radius: var(--curve); position: relative; border: 4px solid var(--primary-green);}
+        .close { position: absolute; right: 20px; top: 15px; font-size: 28px; cursor: pointer; color: var(--text-dark); font-weight: 800;}
+        input, select, textarea { width: 100%; padding: 15px; margin: 10px 0; border: 2px solid var(--border-color); border-radius: 15px; background: var(--card-bg); color: var(--text-dark); outline: none; font-size: 16px; font-weight: 600;}
+
+        /* Admin Fullscreen Styles */
         .admin-fullscreen { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 3000; background: var(--bg-light); flex-direction: row; overflow: hidden; }
         .admin-fullscreen.active { display: flex; }
-        .admin-sidebar { width: 280px; background: var(--dark-green); color: white; padding: 30px 20px; display: flex; flex-direction: column; gap: 15px; }
+        .admin-sidebar { width: 280px; background: #064e3b; color: white; padding: 30px 20px; display: flex; flex-direction: column; gap: 15px; }
         .admin-main { flex: 1; padding: 40px; overflow-y: auto; background: var(--bg-offwhite); position: relative; }
-        .admin-table { width: 100%; background: var(--card-bg); border-collapse: collapse; margin-top: 15px; border-radius: 15px; overflow: hidden; }
-        .admin-table th { background: var(--dark-green); color: white; padding: 15px; text-align: left; }
-        .admin-table td { padding: 15px; border-bottom: 1px solid var(--border-color); }
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; background: var(--card-bg); border-radius: 15px; overflow: hidden; border: 1px solid var(--border-color);}
+        .admin-table th { background: #064e3b; color: white; padding: 15px; text-align: left;}
+        .admin-table td { padding: 12px 15px; border-bottom: 1px solid var(--border-color); color: var(--text-dark); }
 
-        .section-title { font-size: 3.5rem; font-weight: 800; color: var(--dark-green); text-transform: uppercase; margin-bottom: 20px;}
-        body.dark-theme .section-title { color: var(--primary-green); }
-        .section-title span { color: var(--primary-green); font-style: italic; }
-        body.dark-theme .section-title span { color: white; }
+        .section-title { font-size: 3rem; font-weight: 800; color: var(--dark-green); text-transform: uppercase; margin-bottom: 20px;}
+        .gallery-section { padding: 60px 5%; text-align: center; }
+        .gallery-grid { display: flex; gap: 15px; margin-top: 25px; overflow-x: auto; padding-bottom: 15px; scroll-snap-type: x mandatory;}
+        .gallery-img { min-width: 280px; height: 220px; border-radius: var(--curve); background-size: cover; background-position: center; flex: 0 0 auto; scroll-snap-align: start; border: 2px solid var(--border-color);}
+        
+        .reviews-section { padding: 40px 0; overflow: hidden; background: var(--bg-light); }
+        .reviews-track { display: flex; gap: 20px; animation: scrollLeft 25s linear infinite; width: max-content; }
+        .review-card { background: var(--bg-offwhite); padding: 20px; border-radius: var(--curve); width: 320px; color: var(--text-dark); font-weight: 600; border: 1px solid var(--border-color);}
+        @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        .gallery-section { padding: 80px 5%; text-align: center; }
-        .gallery-grid { display: flex; gap: 20px; margin-top: 30px; overflow-x: auto; padding-bottom: 20px; scroll-snap-type: x mandatory;}
-        .gallery-img { min-width: 300px; height: 250px; border-radius: var(--curve); background-size: cover; background-position: center; flex: 0 0 auto; scroll-snap-align: start; border: 2px solid var(--primary-green);}
-
-        .floating-btns { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 15px; z-index: 1000;}
-        .fab { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; color: white; font-size: 28px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: 0.3s;}
+        .about-section { padding: 60px 5%; margin: 0 5% 40px 5%; background: var(--card-bg); border-radius: 40px; border: 1px solid var(--border-color);}
+        .about-layout { display: flex; gap: 30px; align-items: center;}
+        .map-box { flex: 1; height: 350px; border-radius: var(--curve); overflow: hidden; border: 2px solid var(--border-color);}
+        
+        .floating-btns { position: fixed; bottom: 85px; right: 20px; display: flex; flex-direction: column; gap: 12px; z-index: 1000;}
+        .fab { width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; color: white; font-size: 24px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: 0.3s;}
         .fab-wa { background: #25D366; } .fab-call { background: #3498db; }
+        .fab-theme { background: var(--card-bg); color: var(--text-dark); border: 2px solid var(--primary-green); cursor: pointer; }
 
-        /* Floating Theme Switcher for Mobile */
-        .mobile-theme-toggle {
-            position: fixed; top: 110px; right: 20px; width: 45px; height: 45px; background: white; 
-            border-radius: 50%; display: none; align-items: center; justify-content: center; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 1001; cursor: pointer; font-size: 20px;
-            border: 2px solid var(--dark-green);
-        }
-        body.dark-theme .mobile-theme-toggle { background: #1e293b; color: white; border-color: var(--primary-green); }
+        .bottom-nav { display: none; }
+
+        .receipt-box { background: var(--bg-offwhite); border: 1px dashed var(--dark-green); padding: 18px; border-radius: 15px; margin-bottom: 15px; text-align: left; font-size: 14px; color: var(--text-dark);}
+        
+        /* Loading Spinner for Admin Pending */
+        .pending-loader { display: flex; align-items: center; justify-content: center; padding: 20px; gap: 10px; color: #854d0e; font-weight: 700; }
+        .mini-spinner { width: 20px; height: 20px; border: 3px solid rgba(0,0,0,0.1); border-top: 3px solid #eab308; border-radius: 50%; animation: spin 0.8s linear infinite; }
 
         @media(max-width: 768px) {
-            .mobile-theme-toggle { display: flex; }
-            .nav-center .theme-toggle-btn { display: none; }
-            .hero-content h1 { font-size: 3rem; }
-            .section-title { font-size: 2.2rem !important; }
-            
-            /* Mobile Button Size Reductions */
-            .btn-primary { padding: 10px 20px; font-size: 14px; }
-            .btn-book { padding: 8px 15px; font-size: 13px; }
-            .btn-auth-solid { padding: 10px; font-size: 16px; }
-            .btn-auth-outline { padding: 10px; font-size: 16px; }
-            .admin-nav-btn { padding: 10px; font-size: 13px; }
-
-            nav { top: 10px; padding: 10px 15px; }
+            nav { top: 10px; width: 95%; padding: 10px 20px; }
             .logo { font-size: 22px; }
-            .bottom-nav a span:first-child { font-size: 18px; }
-            .bottom-nav a { font-size: 10px; }
-            .booking-container { margin: 10px; padding: 40px 15px; }
-        }
+            .nav-center { display: none; }
+            .hero-content h1 { font-size: 2.8rem; }
+            .hero { height: 70vh; }
+            .section-title { font-size: 2rem; }
+            
+            .bottom-nav { 
+                display: flex; position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); 
+                width: 92%; background: var(--card-bg); backdrop-filter: blur(15px);
+                padding: 8px 12px; border-radius: 40px; justify-content: space-between; align-items: center; 
+                z-index: 1000; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+            }
+            .bottom-nav a { 
+                text-decoration: none; color: var(--text-dark); 
+                display: flex; flex-direction: column; align-items: center; font-size: 10px; font-weight: 800; flex: 1;
+            }
+            .bottom-nav a span:first-child { font-size: 18px; margin-bottom: 2px; }
+            .nav-book-btn .book-circle {
+                background: var(--primary-green); width: 42px; height: 42px; border-radius: 50%;
+                display: flex; justify-content: center; align-items: center; font-size: 18px;
+                color: #064e3b; margin-top: -20px; border: 3px solid var(--bg-light);
+            }
 
-        .bottom-nav { 
-            display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
-            width: 95%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px);
-            padding: 10px 15px; border-radius: 50px; justify-content: space-between; align-items: center; 
-            z-index: 1000; border: 1px solid rgba(255,255,255,0.5); box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+            .booking-layout { flex-direction: column-reverse; }
+            .slots-grid { flex-direction: column; }
+            .about-layout { flex-direction: column; }
+            body { padding-bottom: 100px; }
+            .admin-sidebar { width: 100%; height: auto; flex-direction: row; flex-wrap: wrap; padding: 15px; }
+            .admin-fullscreen { flex-direction: column; }
         }
-        body.dark-theme .bottom-nav { background: rgba(15, 23, 42, 0.95); border-color: rgba(255,255,255,0.1); }
-        .bottom-nav a { text-decoration: none; color: var(--dark-green); display: flex; flex-direction: column; align-items: center; font-weight: 800; flex: 1; }
-        body.dark-theme .bottom-nav a { color: white; }
-        @media(max-width: 768px) { .bottom-nav { display: flex; } }
     </style>
 </head>
-<body class="light-theme">
+<body>
 
     <div id="toast-container" class="toast-container"></div>
     
     <div id="loadingOverlay" class="loading-overlay">
         <div class="spinner"></div>
-        <h3 id="loadingText" style="margin-top:20px; font-weight:800; font-size:20px; letter-spacing: 1px;">Processing...</h3>
+        <h3 id="loadingText" style="margin-top:20px; font-weight:800;">Processing...</h3>
     </div>
 
-    <!-- Mobile Theme Toggle -->
-    <div class="mobile-theme-toggle" onclick="toggleTheme()">🌓</div>
-
+    <!-- Desktop Navigation -->
     <nav>
         <a href="#home" class="logo">⚡ AKS <span>TURF</span></a>
         <div class="nav-center">
             <a href="#home">Home</a>
             <a href="#gallery">Gallery</a>
             <a href="#about">About</a>
-            <button class="theme-toggle-btn" onclick="toggleTheme()">🌓 MODE</button>
+            <button class="theme-toggle" onclick="toggleTheme()">🌓 <span id="theme-text">Dark Mode</span></button>
         </div>
         <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
         <div class="menu-links" id="menuLinks">
@@ -208,16 +222,17 @@
                 <span id="user-greeting" style="color:var(--primary-green); font-weight:800; display:block; margin-bottom:10px;">Hi, User</span>
                 <button onclick="logout()" style="color:#ef4444;">🚪 Logout</button>
             </div>
-            <hr style="border-color: rgba(255,255,255,0.2); margin: 10px 0; width: 100%;">
-            <a href="#" onclick="openModal('adminAuthModal')" class="admin-link">⚙️ Admin Access</a>
+            <hr style="border-color: var(--border-color); margin: 10px 0; width: 100%;">
+            <a href="#" onclick="openModal('adminAuthModal')" style="color: #facc15;">⚙️ Admin Access</a>
         </div>
     </nav>
 
+    <!-- Mobile Bottom Navigation -->
     <div class="bottom-nav">
         <a href="#home"><span>🏠</span><span>Home</span></a>
         <a href="#gallery"><span>📸</span><span>Gallery</span></a>
         <a href="#booking-section" class="nav-book-btn">
-            <div style="background:var(--primary-green); width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:2px; color:var(--dark-green);">🏏</div>
+            <div class="book-circle">🏏</div>
             <span>Book</span>
         </a>
         <a href="#about"><span>ℹ️</span><span>About</span></a>
@@ -228,11 +243,12 @@
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1>PREMIUM <span style="color:var(--primary-green)">CRICKET</span><br>EXPERIENCE</h1>
-            <p style="color: white; margin-bottom: 20px; font-size: 18px; max-width: 600px; font-weight: 600;">Tournament-grade floodlights and perfectly maintained pitches.</p>
-            <button class="btn-primary" onclick="window.location.href='#booking-section'">BOOK A SLOT →</button>
+            <p style="color: white; margin-bottom: 25px; font-size: 17px; max-width: 550px; font-weight: 600;">Tournament-grade floodlights, high-bounce pitch, and premium nets. Book your slot at Pune's finest turf.</p>
+            <button class="btn-primary" onclick="window.location.href='#booking-section'">BOOK A SLOT NOW →</button>
         </div>
     </header>
 
+    <!-- Gallery Section -->
     <section id="gallery" class="gallery-section">
         <h2 class="section-title">THE <span>PITCH</span></h2>
         <div class="gallery-grid">
@@ -244,168 +260,208 @@
         </div>
     </section>
 
+    <!-- Booking Section -->
     <section id="booking-section" class="booking-container">
         <h2 class="section-title" style="text-align: center;">SELECT <span>SLOT</span></h2>
-        <div class="booking-layout" style="display: flex; gap: 20px; flex-wrap: wrap;">
-            <div class="slots-area" id="slots-area" style="flex: 2; min-width: 300px;"></div>
-            <div class="panel-area" style="flex: 1; min-width: 250px;">
-                <div style="background: var(--dark-green); padding: 20px; border-radius: var(--curve); position: sticky; top: 120px; color: white;">
-                    <label style="font-size: 12px; font-weight: 800; color: var(--primary-green);">SELECT DATE</label>
-                    <input type="date" id="booking-date" onchange="fetchSlots()" style="background: transparent; color: white; border: 1px solid var(--primary-green);">
-                    <button class="btn-primary" style="width: 100%; margin-top: 10px;" onclick="fetchSlots()">🔄 REFRESH</button>
+        <div class="booking-layout">
+            <div class="slots-area" id="slots-area"></div>
+            <div class="panel-area">
+                <div class="panel-card">
+                    <div class="date-picker-box">
+                        <label style="font-size: 11px; margin-bottom: 5px; display: block; color: #a7f3d0; font-weight: 800;">SELECT DATE (THIS WEEK)</label>
+                        <input type="date" id="booking-date" onchange="fetchSlots()">
+                    </div>
+                    <button onclick="fetchSlots()" style="width:100%; padding:14px; margin-top:15px; background:var(--bg-offwhite); color:var(--text-dark); border:none; border-radius:var(--curve); cursor:pointer; font-weight:800; border:1px solid var(--border-color);">🔄 REFRESH SLOTS</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="about" class="about-section" style="padding: 80px 5%; border-radius: 40px; margin: 20px 5%; border: 2px solid var(--border-color); background: var(--card-bg);">
+    <!-- Review Section Slider -->
+    <section class="reviews-section">
+        <div class="reviews-track">
+            <div class="review-card">"Best cricket turf in Pune! Amazing lights." - Rahul S.</div>
+            <div class="review-card">"Pitch bounce is extremely well maintained." - Amit P.</div>
+            <div class="review-card">"Seamless booking, great boundary nets!" - Karan V.</div>
+            <div class="review-card">"Top notch experience for night matches." - Vikram D.</div>
+            <div class="review-card">"Friendly staff and great atmosphere." - Sameer K.</div>
+        </div>
+    </section>
+
+    <div style="text-align: center; margin-bottom: 50px;">
+        <button class="btn-primary" onclick="openModal('reviewModal')" style="background: var(--bg-light); border: 2px solid var(--primary-green); color: var(--text-dark); font-size: 14px;">
+            ⭐ WRITE A REVIEW
+        </button>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
         <h2 class="section-title" style="text-align: center;">ABOUT <span>US</span></h2>
-        <div style="display: flex; gap: 40px; flex-wrap: wrap; align-items: center;">
-            <div style="flex: 1; min-width: 300px;">
+        <div class="about-layout">
+            <div class="about-text-box">
                 <h3>AKS Turf - The Ultimate Cricket Arena</h3>
-                <p>Designed strictly for cricket lovers. High-quality pitch, professional floodlights.</p>
-                <p><strong>📞 Phone:</strong> +91 70309 33319</p>
-                <p><strong>📍 Location:</strong> Najushri Sanskruti Hall, Jai Jinendra Pratisthan</p>
+                <p style="margin: 15px 0; line-height: 1.6;">Designed for the cricket fanatic. We offer professional-grade artificial turf, high-intensity LED floodlights, and a spacious field for a true match feel.</p>
+                <div style="margin-top: 15px; font-weight: 700;">
+                    <p>📞 Phone: +91 70309 33319</p>
+                    <p>📍 Location: Najushri Sanskruti Hall, Jai Jinendra Pratisthan</p>
+                </div>
             </div>
-            <div style="flex: 1; min-width: 300px; height: 300px; border-radius: var(--curve); overflow: hidden; border: 2px solid var(--primary-green);">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3784.2096276958473!2d73.8700073757962!3d18.474161470589106!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2ea9a0c54db15%3A0x6feb5876a316843!2sNajushri%20Sanskruti%20Hall%2C%20Jai%20Jinendra%20Pratisthan!5e0!3m2!1sen!2sin!4v1777719310941!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            <div class="map-box">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3784.2096276958473!2d73.8700073757962!3d18.474161470589106!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2ea9a0c54db15%3A0x6feb5876a316843!2sNajushri%20Sanskruti%20Hall%2C%20Jai%20Jinendra%20Pratisthan!5e0!3m2!1sen!2sin!4v1777719310941!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
             </div>
         </div>
     </section>
 
+    <!-- Floating Action Buttons -->
     <div class="floating-btns">
+        <button class="fab fab-theme" onclick="toggleTheme()" id="mobile-theme-fab">🌓</button>
         <a href="tel:+917030933319" class="fab fab-call">📞</a>
         <a href="https://wa.me/917030933319?text=Hello%20AKS%20Turf" target="_blank" class="fab fab-wa">💬</a>
     </div>
 
-    <!-- Modals -->
-    <div id="loginModal" class="modal" style="display:none; position: fixed; z-index: 2000; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px);">
+    <!-- MODALS -->
+    
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('loginModal')" style="float:right; cursor:pointer; font-size:24px;">&times;</span>
-            <h2 id="auth-title" class="section-title" style="font-size: 2rem;">LOG<span>IN</span></h2>
-            <input type="text" id="auth-name" placeholder="Full Name" style="display:none;">
-            <input type="email" id="auth-email" placeholder="Email Address">
-            <input type="password" id="auth-pass" placeholder="Password">
-            <button class="btn-primary" style="width:100%;" onclick="handleAuth('login')">SIGN IN</button>
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2 id="auth-title" class="section-title" style="font-size: 1.8rem; text-align: center;">LOG<span>IN</span></h2>
+            <div id="auth-form-inputs">
+                <input type="text" id="auth-name" placeholder="Full Name" style="display:none;">
+                <input type="email" id="auth-email" placeholder="Email Address">
+                <input type="password" id="auth-pass" placeholder="Password">
+            </div>
+            <button class="btn-primary" style="width:100%; margin-top: 10px;" onclick="handleAuth('login')">SIGN IN</button>
+            <p style="text-align:center; margin-top:15px; font-weight:700; cursor:pointer;" onclick="toggleAuthMode('signup')">Don't have an account? Sign Up</p>
         </div>
     </div>
 
-    <div id="bookingModal" class="modal" style="display:none; position: fixed; z-index: 2000; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px);">
+    <!-- Booking Confirmation Modal -->
+    <div id="bookingModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('bookingModal')" style="float:right; cursor:pointer; font-size:24px;">&times;</span>
-            <h2 class="section-title" style="font-size: 2rem;">CONFIRM <span>SLOT</span></h2>
-            <p id="selected-slot-text" style="font-weight: 800; color: var(--dark-green); margin-bottom: 10px;"></p>
+            <span class="close" onclick="closeModal('bookingModal')">&times;</span>
+            <h2 class="section-title" style="font-size: 1.8rem;">CONFIRM <span>SLOT</span></h2>
+            <p id="selected-slot-text" style="color: #064e3b; font-weight: 800; background: #dcfce7; padding: 10px; border-radius: 10px; margin-bottom: 15px; text-align: center;"></p>
             <form id="bookingForm">
                 <input type="text" id="b-name" placeholder="Captain's Name" required>
-                <input type="text" id="b-phone" placeholder="Phone Number (10 Digits)" required maxlength="10">
+                <input type="text" id="b-phone" placeholder="Phone Number" required pattern="\d{10}">
                 <select id="b-payment" required>
-                    <option value="" disabled selected>Select Payment</option>
-                    <option value="UPI">UPI (Online)</option>
+                    <option value="" disabled selected>Payment Method</option>
+                    <option value="UPI">UPI (Immediate Payment)</option>
                     <option value="CASH">Cash at Ground</option>
                 </select>
-                <button type="submit" class="btn-primary" style="width:100%; margin-top:10px;">BOOK PITCH</button>
+                <button id="submitBookingBtn" type="submit" class="btn-primary" style="width:100%; margin-top:10px;">BOOK PITCH</button>
             </form>
         </div>
     </div>
 
-    <div id="successModal" class="modal" style="display:none; position: fixed; z-index: 2000; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px);">
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
         <div class="modal-content" style="text-align: center;">
-            <h2 class="section-title" style="font-size: 2rem;">PLACED! ✅</h2>
-            <div id="upi-payment-section" style="display:none; padding: 15px; border-radius: 15px; background: #f0fdf4; border: 2px solid var(--primary-green); margin-bottom: 10px;">
-                <p style="color: #065f46; font-weight: 800;">Step 1: Complete UPI Payment</p>
-                <a id="upi-link-btn" href="#" class="btn-primary" style="display:block; text-decoration:none; margin-top:10px;">📱 PAY VIA APP</a>
+            <div style="font-size: 50px;">✅</div>
+            <h2 class="section-title" style="font-size: 1.8rem;">BOOKING <span>PENDING</span></h2>
+            <div class="receipt-box" id="booking-receipt">
+                <p><strong>Captain:</strong> <span id="slip-name"></span></p>
+                <p><strong>Slot:</strong> <span id="slip-slot"></span></p>
+                <p><strong>Date:</strong> <span id="slip-date"></span></p>
+                <p><strong>Total:</strong> ₹<span id="slip-price"></span></p>
             </div>
-            <button class="btn-primary" onclick="sendWhatsAppConfirmation()" style="background:#25D366; color:white; width: 100%;">💬 NOTIFY VIA WHATSAPP</button>
-            <button onclick="closeModal('successModal')" style="margin-top:15px; background:none; border:none; cursor:pointer; font-weight:800; color:var(--dark-green);">Close</button>
+            
+            <div id="upi-payment-section" style="display:none; margin-bottom: 15px;">
+                <p style="font-weight:800; margin-bottom:10px; color:#7e22ce;">Step 1: Pay via UPI Apps</p>
+                <a id="upi-link-btn" href="#" class="btn-primary" style="display:block; text-decoration:none; background:#a855f7; color:white;">📱 OPEN PAYMENT APP</a>
+            </div>
+
+            <button class="btn-primary" style="width:100%; background:#25D366; color:white;" onclick="sendWhatsAppConfirmation()">💬 NOTIFY VIA WHATSAPP</button>
+            <p onclick="closeModal('successModal')" style="margin-top:15px; cursor:pointer; font-weight:800;">Close</p>
         </div>
     </div>
 
-    <div id="adminAuthModal" class="modal" style="display:none; position: fixed; z-index: 2000; inset: 0; background: rgba(0,0,0,0.7);">
+    <!-- Admin Access Modal -->
+    <div id="adminAuthModal" class="modal">
         <div class="modal-content">
-            <h2 class="section-title">ADMIN</h2>
-            <input type="password" id="admin-pass" placeholder="Password">
-            <button class="btn-primary" style="width:100%;" onclick="verifyAdmin()">LOGIN</button>
+            <span class="close" onclick="closeModal('adminAuthModal')">&times;</span>
+            <h2 class="section-title" style="font-size: 1.8rem;">ADMIN <span>LOGIN</span></h2>
+            <input type="password" id="admin-pass-input" placeholder="Admin Password">
+            <button class="btn-primary" style="width:100%;" onclick="verifyAdmin()">ACCESS DASHBOARD</button>
         </div>
     </div>
 
+    <!-- Fullscreen Admin Layout -->
     <div id="adminDashboardFullscreen" class="admin-fullscreen">
         <div class="admin-sidebar">
-            <h2 style="color:var(--primary-green)">ADMIN</h2>
-            <button onclick="closeAdminDashboard()" style="background:#ef4444; color:white; border:none; padding:10px; border-radius:10px; cursor:pointer; font-weight:800;">EXIT PANEL</button>
+            <h2 style="color:var(--primary-green)">AKS ADMIN</h2>
+            <button onclick="loadAdminData()" style="padding:10px; border-radius:10px; border:none; cursor:pointer; font-weight:800;">🔄 Refresh Data</button>
+            <button onclick="closeAdminDashboard()" style="margin-top:auto; background:#ef4444; color:white; padding:10px; border:none; border-radius:10px; cursor:pointer;">EXIT PANEL</button>
         </div>
         <div class="admin-main">
             <h2 class="section-title">DASHBOARD</h2>
-            
-            <div id="admin-pending-area" style="background:#fff7ed; padding:20px; border-radius:15px; border: 2px solid #f97316; margin-bottom:20px;">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3 style="color:#9a3412;">⚠️ PENDING REQUESTS</h3>
-                    <div id="pending-loader" class="admin-mini-spinner"></div>
-                </div>
-                <div id="pending-list" style="margin-top:10px;">
-                    <p style="color: #c2410c;">Checking for bookings...</p>
+            <div id="admin-pending-section" style="background:#fef08a; padding:20px; border-radius:20px; border: 2px solid #eab308; margin-bottom:30px;">
+                <h3 style="color:#854d0e; margin-bottom:15px;">⏳ Pending Approvals (All Dates)</h3>
+                <div id="pending-list-container">
+                    <!-- Loading Spinner -->
+                    <div class="pending-loader" id="pending-loader">
+                        <div class="mini-spinner"></div>
+                        <span>Fetching new bookings...</span>
+                    </div>
                 </div>
             </div>
-
-            <div style="background: white; padding: 20px; border-radius: 15px; border: 1px solid #e5e7eb;">
-                <label>Check Date:</label>
-                <input type="date" id="admin-date-picker" onchange="loadAdminData()">
-                <div style="overflow-x: auto;">
-                    <table class="admin-table">
-                        <thead><tr><th>Slot</th><th>Status</th><th>Action</th></tr></thead>
-                        <tbody id="overview-body"></tbody>
-                    </table>
-                </div>
+            
+            <div style="background:white; padding:20px; border-radius:20px; border:1px solid #e5e7eb;">
+                <h3>Slot Management</h3>
+                <input type="date" id="admin-date-picker" onchange="loadAdminData()" style="max-width:200px;">
+                <table class="admin-table">
+                    <thead><tr><th>Time</th><th>Status</th><th>Action</th></tr></thead>
+                    <tbody id="admin-slot-body"></tbody>
+                </table>
             </div>
         </div>
     </div>
 
     <script>
+        const PHONE = "70309 33319";
+        const UPI_ID = "7030203010@ybl";
         const MORNING_SLOTS = ["07:00 AM - 09:00 AM", "09:00 AM - 11:00 AM", "11:00 AM - 01:00 PM", "01:00 PM - 03:00 PM", "03:00 PM - 05:00 PM"];
         const NIGHT_SLOTS = ["06:00 PM - 08:00 PM", "08:00 PM - 10:00 PM", "10:00 PM - 12:00 AM", "12:00 AM - 02:00 AM", "02:00 AM - 04:00 AM"];
         const ALL_SLOTS = [...MORNING_SLOTS, ...NIGHT_SLOTS];
-        
+
         let currentUser = null;
         let selectedSlot = "";
-        let slotPrice = 0;
+        let selectedPrice = 0;
         let currentBookingData = null;
 
-        function toggleTheme() {
-            const body = document.body;
-            if(body.classList.contains('light-theme')) {
-                body.classList.replace('light-theme', 'dark-theme');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                body.classList.replace('dark-theme', 'light-theme');
-                localStorage.setItem('theme', 'light');
-            }
-        }
-
         document.addEventListener("DOMContentLoaded", () => {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            document.body.classList.add(savedTheme + '-theme');
-
             const dateInput = document.getElementById('booking-date');
             const today = new Date().toISOString().split('T')[0];
-            dateInput.min = today;
             dateInput.value = today;
+            dateInput.min = today;
             
-            checkLoginState();
+            // Check theme
+            if(localStorage.getItem('theme') === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-text').innerText = "Light Mode";
+            }
+
             fetchSlots();
+            checkLoginState();
         });
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            if(html.getAttribute('data-theme') === 'dark') {
+                html.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                document.getElementById('theme-text').innerText = "Dark Mode";
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                document.getElementById('theme-text').innerText = "Light Mode";
+            }
+        }
 
         function toggleMenu() { document.getElementById('menuLinks').classList.toggle('active'); }
         function openModal(id) { document.getElementById(id).style.display = 'block'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-        
-        function handleAuth(type) {
-            const email = document.getElementById('auth-email').value;
-            if(email) {
-                localStorage.setItem('turf_user', email);
-                checkLoginState();
-                closeModal('loginModal');
-                showToast("Logged in!");
-            }
-        }
 
         function checkLoginState() {
             currentUser = localStorage.getItem('turf_user');
@@ -416,12 +472,21 @@
             }
         }
 
+        function handleAuth(mode) {
+            const email = document.getElementById('auth-email').value;
+            if(email) {
+                localStorage.setItem('turf_user', email);
+                checkLoginState();
+                closeModal('loginModal');
+            }
+        }
+
         function logout() { localStorage.removeItem('turf_user'); location.reload(); }
 
         async function fetchSlots() {
             const date = document.getElementById('booking-date').value;
             const area = document.getElementById('slots-area');
-            area.innerHTML = "<p>Loading slots...</p>";
+            area.innerHTML = '<p style="text-align:center;">Loading slots...</p>';
 
             try {
                 const res = await fetch('https://aks-turf-backend.vercel.app/api/db', {
@@ -431,37 +496,49 @@
                 const response = await res.json();
                 const bookings = response.data || [];
 
-                let html = `<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:15px;">`;
-                ALL_SLOTS.forEach(slot => {
-                    const b = bookings.find(x => x.slot === slot);
-                    const isNight = NIGHT_SLOTS.includes(slot);
-                    const price = isNight ? 3400 : 2400;
-                    
-                    let status = "AVAILABLE";
-                    let btnDisabled = "";
-                    if(b) {
-                        status = b.status.toUpperCase();
-                        btnDisabled = "disabled";
-                    }
+                let html = '<div class="slots-grid">';
+                
+                // Morning Column
+                html += '<div class="slots-column"><div class="slot-category">MORNING</div>';
+                MORNING_SLOTS.forEach(s => html += generateSlotCard(s, bookings, 2400));
+                html += '</div>';
 
-                    html += `
-                        <div class="slot-card">
-                            <div>
-                                <div style="font-weight:800;">${slot}</div>
-                                <div style="color:var(--primary-green);">₹${price}</div>
-                            </div>
-                            <button class="btn-book" ${btnDisabled} onclick="openBooking('${slot}', ${price})">${status}</button>
-                        </div>
-                    `;
-                });
-                html += "</div>";
+                // Night Column
+                html += '<div class="slots-column"><div class="slot-category">NIGHT</div>';
+                NIGHT_SLOTS.forEach(s => html += generateSlotCard(s, bookings, 3400));
+                html += '</div></div>';
+
                 area.innerHTML = html;
-            } catch (e) { area.innerHTML = "Error loading slots."; }
+            } catch (e) { area.innerHTML = '<p>Error loading slots.</p>'; }
+        }
+
+        function generateSlotCard(slot, bookings, price) {
+            const b = bookings.find(x => String(x.slot).trim() === slot);
+            let status = 'available', btnText = 'BOOK', disabled = '';
+            
+            if(b) {
+                const bStat = String(b.status).toLowerCase();
+                if(bStat === 'confirmed' || bStat === 'pending') {
+                    status = bStat === 'confirmed' ? 'booked' : 'pending';
+                    btnText = bStat === 'confirmed' ? 'UNAVAILABLE' : 'WAITING...';
+                    disabled = 'disabled';
+                }
+            }
+
+            return `
+                <div class="slot-card ${disabled ? 'greyed-out' : ''}">
+                    <div><strong>${slot}</strong><br><small>₹${price}</small></div>
+                    <div style="text-align:right;">
+                        <span class="status-${status}">${status.toUpperCase()}</span><br>
+                        <button class="btn-book" ${disabled} onclick="openBooking('${slot}', ${price})">${btnText}</button>
+                    </div>
+                </div>
+            `;
         }
 
         function openBooking(slot, price) {
-            if(!currentUser) return openModal('loginModal');
-            selectedSlot = slot; slotPrice = price;
+            if(!currentUser) { alert("Please login to book!"); openModal('loginModal'); return; }
+            selectedSlot = slot; selectedPrice = price;
             document.getElementById('selected-slot-text').innerText = `${slot} | ₹${price}`;
             openModal('bookingModal');
         }
@@ -473,51 +550,70 @@
             const phone = document.getElementById('b-phone').value;
             const payment = document.getElementById('b-payment').value;
 
-            const payload = { action: "book", date: date, slot: selectedSlot, name: name, email: currentUser, phone: phone, payment: payment };
-            currentBookingData = { date, slot: selectedSlot, name, price: slotPrice, payment };
+            const btn = document.getElementById('submitBookingBtn');
+            btn.disabled = true; btn.innerText = "Processing...";
+
+            const payload = { action: "book", date, slot: selectedSlot, name, email: currentUser, phone, payment };
 
             try {
                 await fetch('https://aks-turf-backend.vercel.app/api/db', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
                 });
                 
-                closeModal('bookingModal');
+                currentBookingData = { name, slot: selectedSlot, date, price: selectedPrice, payment };
+                
+                document.getElementById('slip-name').innerText = name;
+                document.getElementById('slip-slot').innerText = selectedSlot;
+                document.getElementById('slip-date').innerText = date;
+                document.getElementById('slip-price').innerText = selectedPrice;
+
                 if(payment === 'UPI') {
                     document.getElementById('upi-payment-section').style.display = 'block';
-                    document.getElementById('upi-link-btn').href = `upi://pay?pa=7030203010@ybl&pn=AKS%20Turf&am=${slotPrice}&cu=INR&tn=Turf-${date}`;
+                    // Deep link for UPI
+                    const upiLink = `upi://pay?pa=${UPI_ID}&pn=AKS%20Turf&am=${selectedPrice}&cu=INR&tn=Turf%20Booking%20${selectedSlot}`;
+                    document.getElementById('upi-link-btn').href = upiLink;
                 } else {
                     document.getElementById('upi-payment-section').style.display = 'none';
                 }
+
+                closeModal('bookingModal');
                 openModal('successModal');
                 fetchSlots();
-            } catch (error) { alert("Error booking."); }
+            } catch (err) { alert("Booking failed."); }
+            finally { btn.disabled = false; btn.innerText = "BOOK PITCH"; }
         });
 
         function sendWhatsAppConfirmation() {
-            const text = `Hello AKS Turf! I just booked a slot.%0AName: ${currentBookingData.name}%0ADate: ${currentBookingData.date}%0ASlot: ${currentBookingData.slot}%0APayment: ${currentBookingData.payment}`;
+            const d = currentBookingData;
+            const text = `Hello AKS Turf! I have requested a booking.%0A%0A*Captain:* ${d.name}%0A*Slot:* ${d.slot}%0A*Date:* ${d.date}%0A*Amount:* ₹${d.price}%0A*Payment:* ${d.payment}`;
             window.open(`https://wa.me/917030933319?text=${text}`, '_blank');
         }
 
+        /* ADMIN LOGIC */
         function verifyAdmin() {
-            if(document.getElementById('admin-pass').value === '12345') {
+            if(document.getElementById('admin-pass-input').value === '12345') {
                 closeModal('adminAuthModal');
                 openAdminDashboard();
-            } else { alert("Wrong password"); }
+            } else { alert("Wrong Password!"); }
         }
 
         function openAdminDashboard() {
             document.getElementById('adminDashboardFullscreen').classList.add('active');
-            document.getElementById('admin-date-picker').value = document.getElementById('booking-date').value;
+            document.getElementById('admin-date-picker').value = new Date().toISOString().split('T')[0];
             loadAdminData();
         }
 
-        function closeAdminDashboard() { document.getElementById('adminDashboardFullscreen').classList.remove('active'); }
+        function closeAdminDashboard() {
+            document.getElementById('adminDashboardFullscreen').classList.remove('active');
+        }
 
         async function loadAdminData() {
+            // Show loaders
+            document.getElementById('pending-loader').style.display = 'flex';
             const date = document.getElementById('admin-date-picker').value;
-            document.getElementById('pending-loader').style.display = 'block';
-            
+
             try {
+                // Fetch slots for current date
                 const res = await fetch('https://aks-turf-backend.vercel.app/api/db', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ action: "getSlots", date: date })
@@ -525,50 +621,68 @@
                 const response = await res.json();
                 const bookings = response.data || [];
 
-                // Filter ALL pending bookings (usually the backend sends all for that date)
-                const pending = bookings.filter(b => b.status === 'pending');
-                const pList = document.getElementById('pending-list');
+                // Display pending across all dates (Simplified frontend filter)
+                const pendingList = bookings.filter(b => String(b.status).toLowerCase() === 'pending');
+                const container = document.getElementById('pending-list-container');
                 
-                if(pending.length > 0) {
-                    pList.innerHTML = pending.map(b => `
-                        <div style="background:white; padding:10px; margin-bottom:5px; border-radius:10px; color:#1f2937;">
-                            <strong>${b.slot}</strong> - ${b.name} (${b.phone})<br>
-                            <button onclick="updateStatus('${date}', '${b.slot}', 'confirmed')" style="background:green; color:white; border:none; padding:5px; cursor:pointer;">Approve</button>
-                            <button onclick="updateStatus('${date}', '${b.slot}', 'cancelled')" style="background:red; color:white; border:none; padding:5px; cursor:pointer;">Deny</button>
-                        </div>
-                    `).join('');
-                } else {
-                    pList.innerHTML = "<p>No pending bookings found.</p>";
-                }
+                // Keep the loader visible for a split second for UX
+                setTimeout(() => {
+                    document.getElementById('pending-loader').style.display = 'none';
+                    if(pendingList.length === 0) {
+                        container.innerHTML = '<p style="text-align:center; padding:10px;">No pending bookings found.</p>';
+                    } else {
+                        container.innerHTML = pendingList.map(b => `
+                            <div style="background:white; padding:15px; margin-bottom:10px; border-radius:10px; display:flex; justify-content:space-between; align-items:center;">
+                                <div><strong>${b.name}</strong><br>${b.slot} (${b.date})</div>
+                                <div>
+                                    <button onclick="updateStatus('${b.date}', '${b.slot}', 'confirmed')" style="background:green; color:white; border:none; padding:8px; border-radius:5px; cursor:pointer;">Confirm</button>
+                                    <button onclick="updateStatus('${b.date}', '${b.slot}', 'available')" style="background:red; color:white; border:none; padding:8px; border-radius:5px; cursor:pointer;">Deny</button>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+                }, 500);
 
-                document.getElementById('overview-body').innerHTML = ALL_SLOTS.map(slot => {
-                    const b = bookings.find(x => x.slot === slot);
-                    let status = "OPEN";
-                    if(b) status = b.status.toUpperCase();
-                    return `<tr><td>${slot}</td><td>${status}</td><td><button onclick="updateStatus('${date}', '${slot}', 'blocked')">Block</button></td></tr>`;
+                // Slot table
+                const slotBody = document.getElementById('admin-slot-body');
+                slotBody.innerHTML = ALL_SLOTS.map(slot => {
+                    const b = bookings.find(x => String(x.slot).trim() === slot);
+                    let status = '<span style="color:green">OPEN</span>';
+                    let btn = `<button onclick="updateStatus('${date}', '${slot}', 'blocked')" style="background:#444; color:white; border:none; padding:5px 10px; border-radius:5px;">Block</button>`;
+
+                    if(b) {
+                        if(b.status === 'confirmed') {
+                            status = '<span style="color:red">BOOKED</span>';
+                            btn = `<button onclick="updateStatus('${date}', '${slot}', 'available')" style="background:red; color:white; border:none; padding:5px 10px; border-radius:5px;">Cancel</button>`;
+                        } else if(b.status === 'blocked') {
+                            status = 'BLOCKED';
+                            btn = `<button onclick="updateStatus('${date}', '${slot}', 'available')" style="background:green; color:white; border:none; padding:5px 10px; border-radius:5px;">Unblock</button>`;
+                        }
+                    }
+                    return `<tr><td>${slot}</td><td>${status}</td><td>${btn}</td></tr>`;
                 }).join('');
 
-            } catch(e) { console.error(e); }
-            finally { document.getElementById('pending-loader').style.display = 'none'; }
+            } catch (e) { 
+                document.getElementById('pending-loader').style.display = 'none';
+                alert("Failed to load admin data."); 
+            }
         }
 
         async function updateStatus(date, slot, status) {
-            await fetch('https://aks-turf-backend.vercel.app/api/db', {
-                method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: "updateStatus", date, slot, status })
-            });
-            loadAdminData();
+            try {
+                await fetch('https://aks-turf-backend.vercel.app/api/db', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: "updateStatus", date, slot, status })
+                });
+                loadAdminData();
+            } catch (e) { alert("Update failed."); }
         }
 
-        function showToast(msg) {
-            const container = document.getElementById('toast-container');
-            const t = document.createElement('div');
-            t.className = 'toast';
-            t.innerText = msg;
-            container.appendChild(t);
-            setTimeout(() => t.classList.add('show'), 10);
-            setTimeout(() => { t.classList.remove('show'); setTimeout(()=>t.remove(), 500); }, 3000);
+        function handleMobileUser() {
+            if(!currentUser) openModal('loginModal');
+            else alert("Logged in as: " + currentUser);
         }
+
     </script>
 </body>
 </html>
